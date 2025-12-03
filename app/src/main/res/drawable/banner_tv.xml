@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Full-bleed background to avoid black bars on TV home -->
+    <item android:drawable="@drawable/background_login" />
+    <!-- Centered logo on top of the background -->
+    <item>
+        <bitmap
+            android:antialias="true"
+            android:filter="true"
+            android:gravity="center"
+            android:src="@drawable/ic_tv_banner" />
+    </item>
+</layer-list>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="16dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_menu_item"
+    android:clickable="true"
+    android:focusable="true">
+    <TextView
+        android:id="@+id/tvCategoryName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kategori Adı"
+        android:textColor="#BBBBBB"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+
+</LinearLayout>

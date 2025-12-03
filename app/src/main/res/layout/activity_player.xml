@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".PlayerActivity">
+
+    <com.google.android.exoplayer2.ui.StyledPlayerView
+        android:id="@+id/playerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:resize_mode="fit"
+        app:show_buffering="when_playing"
+        app:use_controller="true"
+        app:controller_layout_id="@layout/custom_player_controls" />
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="#03DAC5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvSeekOverlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_universal_selector"
+        android:text="+10s"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvNumberOverlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_universal_selector"
+        android:text="12"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="24dp"/>
+
+    <include layout="@layout/channel_overlay" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

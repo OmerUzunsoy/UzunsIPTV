@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#02c7b4"/>
+            <corners android:radius="14dp" />
+            <stroke android:width="2dp" android:color="#FFFFFFFF" />
+        </shape>
+    </item>
+    
+    <!-- KUMANDA İLE ÜSTÜNDEYKEN (FOCUS) - ÇOK BELİRGİN -->
+    <item android:state_focused="true">
+        <layer-list>
+            <!-- Outer glow/shadow -->
+            <item android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#FFFFFF"/>
+                    <corners android:radius="16dp" />
+                </shape>
+            </item>
+            <!-- Inner bright button -->
+            <item android:top="5dp" android:bottom="5dp" android:left="5dp" android:right="5dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#00FFF7"/>
+                    <corners android:radius="12dp" />
+                    <stroke android:width="3dp" android:color="#FFFFFF" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    
+    <!-- NORMAL DURUM -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#03DAC5"/>
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</selector>

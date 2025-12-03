@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/channelOverlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_random_overlay"
+    android:visibility="gone">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/channelOverlayCard"
+        android:layout_width="700dp"
+        android:layout_height="520dp"
+        android:layout_margin="24dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="18dp"
+        android:alpha="0"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/panelOverlayCategories"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.28"
+                android:orientation="vertical"
+                android:background="#1A1A1A"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kategoriler"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvOverlayCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="afterDescendants"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.72"
+                android:orientation="vertical"
+                android:padding="12dp"
+                android:background="#111111">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kanal Listesi"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_universal_selector"
+                    android:paddingHorizontal="10dp"
+                    android:layout_marginTop="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@android:drawable/ic_menu_search"
+                        app:tint="#AAAAAA"/>
+
+                    <EditText
+                        android:id="@+id/etOverlaySearch"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="Kanal ara..."
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#666666"
+                        android:textSize="14sp"
+                        android:paddingStart="8dp"
+                        android:singleLine="true"
+                        android:imeOptions="actionSearch"/>
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvOverlayChannels"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:descendantFocusability="afterDescendants"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

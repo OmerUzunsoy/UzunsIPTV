@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#101010"
+    android:baselineAligned="false"
+    tools:context=".LiveTvActivity">
+
+    <LinearLayout
+        android:id="@+id/panelCategories"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical"
+        android:background="#1A1A1A"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+
+            <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@android:drawable/ic_menu_revert"
+            app:tint="#FFFFFF"
+            android:background="@drawable/bg_universal_selector"
+            android:padding="6dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KATEGORİLER"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nextFocusRight="@+id/rvChannels"
+            android:descendantFocusability="afterDescendants"/>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:padding="8dp">
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#03DAC5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/favActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_universal_selector"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnFavAuto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Oto Atama"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_universal_selector"/>
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btnFavClear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Atamaları Sil"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_universal_selector"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvChannels"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nextFocusLeft="@+id/rvCategories"
+            android:descendantFocusability="afterDescendants"
+            app:layout_constraintTop_toBottomOf="@id/favActions"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#101010"
+    android:baselineAligned="false"
+    tools:context=".SeriesActivity">
+
+    <LinearLayout
+        android:id="@+id/panelCategories"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:orientation="vertical"
+        android:background="#1A1A1A"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@android:drawable/ic_menu_revert"
+                app:tint="#FFFFFF"
+                android:background="@drawable/bg_universal_selector"
+                android:padding="6dp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DİZİ KATEGORİLERİ"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"/>
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nextFocusRight="@+id/rvSeries"
+            android:descendantFocusability="afterDescendants"/>
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_universal_selector"
+            android:paddingHorizontal="12dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_search"
+                app:tint="#AAAAAA"/>
+
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Dizi ara..."
+                android:textColor="#FFFFFF"
+                android:textColorHint="#666666"
+                android:textSize="14sp"
+                android:paddingStart="12dp"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"/>
+
+            <Button
+                android:id="@+id/btnRandomPickSeries"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="12dp"
+                android:background="@drawable/bg_universal_selector"
+                android:drawableStart="@drawable/ic_shuffle"
+                android:drawablePadding="8dp"
+                android:text="Bugün ne izlesek? 🎲"
+                android:textAllCaps="false"
+                android:textColor="#03DAC5"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:contentDescription="Rastgele dizi"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#03DAC5"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSeries"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:nextFocusLeft="@+id/rvCategories"
+            android:descendantFocusability="afterDescendants"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/randomOverlaySeries"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_random_overlay"
+        android:visibility="gone">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/randomCardSeries"
+            android:layout_width="260dp"
+            android:layout_height="380dp"
+            android:layout_margin="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="18dp"
+            android:alpha="0"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/randomPosterSeries"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_placeholder"/>
+
+                <TextView
+                    android:id="@+id/randomTitleSeries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rastgele Dizi"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:padding="12dp"
+                    android:background="#BF000000"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:background="#CC000000">
+
+                    <Button
+                        android:id="@+id/btnRandomAgainSeries"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tekrar"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_universal_selector"
+                        android:textColor="#FFFFFF"
+                        android:padding="10dp"
+                        android:nextFocusRight="@id/btnRandomGoSeries"/>
+
+                    <Space
+                        android:layout_width="12dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:id="@+id/btnRandomGoSeries"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Diziye Git"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_primary_button"
+                        android:textColor="#000000"
+                        android:padding="10dp"
+                        android:nextFocusLeft="@id/btnRandomAgainSeries"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

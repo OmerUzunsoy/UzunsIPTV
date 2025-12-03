@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F0F">
+
+    <LinearLayout
+        android:id="@+id/settingsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1A1A1A"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_universal_selector"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Ayarlar"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvComingSoon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/bg_badge_soon"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:text="Yakında"
+            android:textAllCaps="true"
+            android:textColor="#0F0F0F"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_universal_selector"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/settingsToolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:id="@+id/rowAutoPlay"
+            style="@style/SettingsRow"
+            android:paddingBottom="12dp">
+            <TextView
+                style="@style/SettingsTitle"
+                android:text="Otomatik Sonraki İçerik" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAutoPlay"
+                style="@style/SettingsSwitch" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/SettingsRow">
+            <TextView
+                style="@style/SettingsTitle"
+                android:text="Koyu Tema" />
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchDarkTheme"
+                style="@style/SettingsSwitch" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSettingsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Yapılan ayarlar cihazda saklanır."
+            android:textColor="#777777"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

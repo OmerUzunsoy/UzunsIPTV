@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F0F">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1A1A1A"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_universal_selector"
+            android:padding="8dp"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="Hesaplar"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnAddAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="+ Yeni"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activeAccountCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_universal_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvActiveAccountTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aktif Hesap"
+                android:textColor="#03DAC5"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgActiveInlineAvatar"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_universal_selector"
+                    android:padding="6dp"
+                    android:src="@drawable/ic_user_avatar"
+                    android:tint="#03DAC5" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvActiveAccountName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Henüz giriş yapılmadı."
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvActiveAccountServer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#AAAAAA"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLogoutActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Çıkış"
+            android:textAllCaps="false"
+            android:background="@drawable/bg_universal_selector"
+            android:textColor="#FF5252"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvOtherAccounts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Diğer Hesaplar"
+        android:textColor="#BBBBBB"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/activeAccountCard" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAccounts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvOtherAccounts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEmptyAccounts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Henüz ek hesap bulunmuyor."
+        android:textColor="#777777"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/rvAccounts"
+        app:layout_constraintBottom_toBottomOf="@id/rvAccounts"
+        app:layout_constraintStart_toStartOf="@id/rvAccounts"
+        app:layout_constraintEnd_toEndOf="@id/rvAccounts" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

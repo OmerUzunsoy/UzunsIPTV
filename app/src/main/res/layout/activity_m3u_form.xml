@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#0F0F0F"
+    android:baselineAligned="false">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.4">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/background_login"
+            android:scaleType="centerCrop"
+            android:alpha="0.3"/>
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:backgroundTint="#333333"
+            android:minHeight="36dp"
+            android:text="← Geri"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:paddingHorizontal="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UZUNS"
+                android:textColor="#03DAC5"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IPTV PLAYER"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sınırsız eğlenceler dileriz"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"/>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:fillViewport="true"
+        android:background="#121212">
+
+        <LinearLayout
+            android:id="@+id/loginRoot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:padding="24dp">
+            <TextView
+                android:id="@+id/tvM3uTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="M3U Playlist Ekle"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#888888"
+                app:boxBackgroundColor="#1E1E1E"
+                app:boxStrokeColor="#03DAC5"
+                app:hintTextColor="#03DAC5"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlaylistName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:inputType="textCapWords"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#888888"
+                app:boxBackgroundColor="#1E1E1E"
+                app:boxStrokeColor="#03DAC5"
+                app:hintTextColor="#03DAC5"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlaylistUrl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:inputType="textUri"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:textColorHint="#888888"
+                app:boxBackgroundColor="#1E1E1E"
+                app:boxStrokeColor="#03DAC5"
+                app:hintTextColor="#03DAC5"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlaylistUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textColorHint="#888888"
+                app:boxBackgroundColor="#1E1E1E"
+                app:boxStrokeColor="#03DAC5"
+                app:hintTextColor="#03DAC5"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#AAAAAA"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlaylistPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnImportM3u"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_primary_button"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:text="PLAYLISTİ EKLE"
+                android:textColor="@color/login_button_text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvLastImport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="#777777"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#101010"
+    android:baselineAligned="false">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.35"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="#151515">
+
+        <LinearLayout
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:background="@drawable/bg_universal_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="start">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_revert"
+                app:tint="#FFFFFF"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GERİ"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="8dp">
+            <ImageView
+                android:id="@+id/imgPoster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="centerCrop"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dizi Adı"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IMDB 8.9"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:background="@drawable/bg_live_badge"
+            android:backgroundTint="#FBC02D"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/tvPlot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Konu yükleniyor..."
+            android:textColor="#AAAAAA"
+            android:textSize="12sp"
+            android:layout_marginTop="12dp"
+            android:lineSpacingExtra="2dp"
+            android:maxLines="5"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SEZONLAR"
+            android:textColor="#03DAC5"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSeasons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:nextFocusDown="@id/rvEpisodes"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BÖLÜMLER"
+            android:textColor="#03DAC5"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <ProgressBar
+            android:id="@+id/pbEpisodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="#03DAC5"
+            android:layout_gravity="center"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvEpisodes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nextFocusUp="@id/rvSeasons"/>
+
+    </LinearLayout>
+
+</LinearLayout>
