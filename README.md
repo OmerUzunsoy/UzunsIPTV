@@ -2,6 +2,9 @@
 
 Modern ve kullanıcı dostu bir **Android IPTV Player** uygulaması. Xtream Codes API ve M3U playlist desteği ile canlı TV, film (VOD) ve dizi içeriklerini izlemenizi sağlar.
 
+[![Download APK](https://img.shields.io/badge/📥_APK_İNDİR-v1.0.0-brightgreen?style=for-the-badge)](https://github.com/OmerUzunsoy/UzunsIPTV/releases/download/v1.0.0/UzunsIPTV-v1.0.0.apk)
+[![GitHub Release](https://img.shields.io/github/v/release/OmerUzunsoy/UzunsIPTV?style=for-the-badge&logo=github)](https://github.com/OmerUzunsoy/UzunsIPTV/releases)
+
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
 ![ExoPlayer](https://img.shields.io/badge/ExoPlayer-4285F4?style=for-the-badge&logo=google&logoColor=white)
