@@ -3,37 +3,38 @@
 
     <item android:state_selected="true" android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#03DAC5" />
-            <stroke android:width="3dp" android:color="#FFFFFF" />
-            <corners android:radius="8dp" />
+            <solid android:color="@color/app_accent" />
+            <stroke android:width="2dp" android:color="@color/app_focus" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 
     <item android:state_selected="true">
         <shape android:shape="rectangle">
-            <solid android:color="#03DAC5" />
-            <corners android:radius="8dp" />
+            <solid android:color="@color/app_accent" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#33FFFFFF" /> <corners android:radius="8dp" />
+            <solid android:color="#3D2A1C12" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#252525" />
-            <stroke android:width="2dp" android:color="#FFFFFF"/>
-            <corners android:radius="8dp" />
+            <solid android:color="@color/app_panel_strong" />
+            <stroke android:width="2dp" android:color="@color/app_focus"/>
+            <corners android:radius="20dp" />
         </shape>
     </item>
 
     <item>
         <shape android:shape="rectangle">
             <solid android:color="#00000000" />
-            <corners android:radius="8dp" />
+            <corners android:radius="20dp" />
         </shape>
     </item>
 </selector>

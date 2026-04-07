@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.uzuns.uzunsiptv.ChannelHotkeyManager
 
 class ChannelAdapter(
     private val onClick: (LiveStream) -> Unit,
@@ -17,7 +16,7 @@ class ChannelAdapter(
     private var channels = listOf<LiveStream>()
 
     fun updateList(newList: List<LiveStream>) {
-        channels = newList
+        channels = newList.toList()
         notifyDataSetChanged()
     }
 
@@ -38,6 +37,7 @@ class ChannelAdapter(
         // Kanal Logosu Yükleme (Glide Kütüphanesi ile)
         Glide.with(holder.itemView.context)
             .load(channel.streamIcon)
+            .fitCenter()
             .placeholder(R.mipmap.ic_launcher) // Resim yoksa bu çıkar
             .error(R.mipmap.ic_launcher)      // Hata olursa bu çıkar
             .into(holder.imgLogo)
@@ -52,7 +52,7 @@ class ChannelAdapter(
         }
     }
 
-    override fun getItemCount() = channels.size
+    override fun getItemCount(): Int = channels.size
 
     class ChannelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView = view.findViewById(R.id.tvChannelName)

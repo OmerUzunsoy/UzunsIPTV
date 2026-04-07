@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F0F0F">
+    android:background="@drawable/bg_app_surface">
 
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1A1A1A"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/bg_toolbar_surface"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:padding="18dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -20,8 +23,11 @@
             android:layout_height="36dp"
             android:background="@drawable/bg_universal_selector"
             android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"
             android:src="@android:drawable/ic_media_previous"
-            app:tint="#FFFFFF" />
+            android:scaleType="centerInside"
+            app:tint="@color/app_text_primary" />
 
         <TextView
             android:layout_width="0dp"
@@ -29,9 +35,10 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:text="Hesaplar"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/app_text_primary"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:fontFamily="serif" />
 
         <Button
             android:id="@+id/btnAddAccount"
@@ -40,7 +47,7 @@
             android:background="@drawable/bg_primary_button"
             android:text="+ Yeni"
             android:textAllCaps="false"
-            android:textColor="#000000"
+            android:textColor="@color/login_button_text"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -48,11 +55,13 @@
         android:id="@+id/activeAccountCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_universal_selector"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/bg_panel_surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="16dp"
+        android:padding="22dp"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
@@ -67,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aktif Hesap"
-                android:textColor="#03DAC5"
+                android:textColor="@color/app_accent"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -85,7 +94,8 @@
                     android:background="@drawable/bg_universal_selector"
                     android:padding="6dp"
                     android:src="@drawable/ic_user_avatar"
-                    android:tint="#03DAC5" />
+                    android:tint="@color/app_accent"
+                    android:scaleType="centerInside" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -98,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Henüz giriş yapılmadı."
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/app_text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -107,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="#AAAAAA"
+                        android:textColor="@color/app_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -120,24 +130,28 @@
             android:text="Çıkış"
             android:textAllCaps="false"
             android:background="@drawable/bg_universal_selector"
-            android:textColor="#FF5252"/>
+            android:textColor="@color/app_danger"/>
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvOtherAccounts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
         android:text="Diğer Hesaplar"
-        android:textColor="#BBBBBB"
+        android:textColor="@color/app_text_secondary"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/activeAccountCard" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAccounts"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:paddingHorizontal="28dp"
+        android:paddingBottom="20dp"
         app:layout_constraintTop_toBottomOf="@id/tvOtherAccounts"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Henüz ek hesap bulunmuyor."
-        android:textColor="#777777"
+        android:textColor="@color/app_text_muted"
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/rvAccounts"

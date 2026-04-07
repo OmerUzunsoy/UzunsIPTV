@@ -18,7 +18,7 @@ class VodAdapter(
     private var movies = listOf<VodStream>()
 
     fun updateList(newList: List<VodStream>) {
-        movies = newList
+        movies = newList.toList()
         notifyDataSetChanged()
     }
 
@@ -57,7 +57,7 @@ class VodAdapter(
             if (event.action == android.view.KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     android.view.KeyEvent.KEYCODE_DPAD_DOWN -> {
-                        val total = movies.size
+                        val total = itemCount
                         val lastRowCount = if (total % spanCount == 0) spanCount else total % spanCount
                         if (position >= total - lastRowCount) {
                             return@setOnKeyListener true
@@ -73,7 +73,7 @@ class VodAdapter(
         }
     }
 
-    override fun getItemCount() = movies.size
+    override fun getItemCount(): Int = movies.size
 
     class VodViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView = view.findViewById(R.id.tvMovieName)

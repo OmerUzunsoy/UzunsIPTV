@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLiveTvLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#101010"
+    android:background="@drawable/bg_app_surface"
     android:baselineAligned="false"
     tools:context=".LiveTvActivity">
 
@@ -14,35 +15,40 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.25"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
         android:orientation="vertical"
-        android:background="#1A1A1A"
-        android:padding="8dp">
+        android:background="@drawable/bg_panel_surface"
+        android:padding="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="18dp">
 
             <ImageView
             android:id="@+id/btnBack"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@android:drawable/ic_menu_revert"
-            app:tint="#FFFFFF"
+            app:tint="@color/app_text_primary"
             android:background="@drawable/bg_universal_selector"
             android:padding="6dp"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true"
+            android:scaleType="centerInside"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="KATEGORİLER"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
+                android:textColor="@color/app_text_primary"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                android:fontFamily="serif"
                 android:layout_marginStart="12dp"/>
         </LinearLayout>
 
@@ -56,16 +62,21 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentLivePanel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.75"
-        android:padding="8dp">
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
+        android:padding="14dp"
+        android:background="@drawable/bg_panel_surface">
 
         <ProgressBar
             android:id="@+id/pbLoading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="#03DAC5"
+            android:indeterminateTint="@color/app_accent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +88,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="@drawable/bg_universal_selector"
-            android:padding="8dp"
+            android:background="@drawable/bg_toolbar_surface"
+            android:padding="10dp"
             android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +102,7 @@
                 android:layout_weight="1"
                 android:text="Oto Atama"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_text_primary"
                 android:background="@drawable/bg_universal_selector"/>
 
             <Space
@@ -105,7 +116,7 @@
                 android:layout_weight="1"
                 android:text="Atamaları Sil"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_text_primary"
                 android:background="@drawable/bg_universal_selector"/>
         </LinearLayout>
 

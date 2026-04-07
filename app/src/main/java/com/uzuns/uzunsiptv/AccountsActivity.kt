@@ -39,7 +39,13 @@ class AccountsActivity : AppCompatActivity() {
 
         recycler.layoutManager = LinearLayoutManager(this)
         adapter = AccountAdapter(emptyList()) {
-            Toast.makeText(this, "${it.name} seçildi", Toast.LENGTH_SHORT).show()
+            val account = AccountsStore.getAll(this).firstOrNull { acc -> acc.id == it.id }
+            if (account != null) {
+                AccountsStore.setActive(this, account)
+                Toast.makeText(this, "${account.name} aktif edildi", Toast.LENGTH_SHORT).show()
+                loadActiveAccount()
+                loadStoredAccounts()
+            }
         }
         recycler.adapter = adapter
 
@@ -54,15 +60,10 @@ class AccountsActivity : AppCompatActivity() {
     }
 
     private fun loadActiveAccount() {
-        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        val username = prefs.getString("USERNAME", null)
-        val profileName = prefs.getString("PROFILE_NAME", null)
-        val server = prefs.getString("SERVER_URL", null)
-
-        if (username != null && server != null) {
-            val name = if (!profileName.isNullOrEmpty()) profileName else username
-            tvActiveName.text = name
-            tvActiveServer.text = server
+        val active = AccountsStore.getActive(this)
+        if (active != null) {
+            tvActiveName.text = active.name
+            tvActiveServer.text = active.url
             tvActiveServer.visibility = View.VISIBLE
             btnLogoutActive.isEnabled = true
             btnLogoutActive.alpha = 1f
@@ -76,21 +77,22 @@ class AccountsActivity : AppCompatActivity() {
     }
 
     private fun loadStoredAccounts() {
-        val prefs = getSharedPreferences("AccountsPrefs", MODE_PRIVATE)
-        val storedSet = prefs.getStringSet("M3U_LIST", emptySet()) ?: emptySet()
-        val list = storedSet.map {
-            val parts = it.split("|")
-            val name = parts.getOrNull(0) ?: "Playlist"
-            val url = parts.getOrNull(1) ?: ""
-            AccountItem(name, url, "M3U")
+        val active = AccountsStore.getActive(this)
+        val list = AccountsStore.getAll(this).map { acc ->
+            AccountItem(
+                id = acc.id,
+                name = acc.name,
+                server = acc.url,
+                type = acc.type,
+                isActive = acc.id == active?.id
+            )
         }
         adapter.update(list)
         tvEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
     }
 
     private fun logoutActive() {
-        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
-        prefs.edit().clear().apply()
+        AccountsStore.clearActive(this)
         Toast.makeText(this, "Aktif hesaptan çıkış yapıldı", Toast.LENGTH_SHORT).show()
         loadActiveAccount()
     }

@@ -96,9 +96,12 @@ class PlayerActivity : AppCompatActivity() {
     private var currentStreamId: Int = 0
     private var currentStreamName: String = ""
     private var currentStreamIcon: String? = null
+    private var currentDirectUrl: String? = null
     private var streamType: String = "live"
     private var currentExtension: String = "ts"
     private var currentSeriesId: Int? = null
+    private var currentSeriesName: String? = null
+    private var currentSeriesCover: String? = null
     private var isFavorite: Boolean = false
     private var autoPlayNext: Boolean = true
 
@@ -127,8 +130,9 @@ class PlayerActivity : AppCompatActivity() {
         playerView = findViewById(R.id.playerView)
         pbLoading = findViewById(R.id.pbLoading)
         tvNumberOverlay = findViewById(R.id.tvNumberOverlay)
-        playerView?.controllerShowTimeoutMs = 2000
+        playerView?.controllerShowTimeoutMs = 3000
         playerView?.setControllerHideOnTouch(true)
+        playerView?.setControllerAutoShow(true)
 
         tvChannelName = playerView?.findViewById(R.id.tvChannelNamePlayer)
         tvSystemTime = playerView?.findViewById(R.id.tvSystemTime)
@@ -165,18 +169,26 @@ class PlayerActivity : AppCompatActivity() {
         currentStreamIcon = intent.getStringExtra("STREAM_ICON")
         streamType = intent.getStringExtra("STREAM_TYPE") ?: "live"
         currentExtension = intent.getStringExtra("CONTAINER_EXTENSION") ?: "ts"
+        currentDirectUrl = intent.getStringExtra("DIRECT_URL")
         currentSeriesId = intent.getIntExtra("SERIES_ID", 0).takeIf { it != 0 }
+        currentSeriesName = intent.getStringExtra("SERIES_NAME")
+        currentSeriesCover = intent.getStringExtra("SERIES_COVER")
 
         tvChannelName?.text = currentStreamName
-        timeHandler.post(timeRunnable)
-
-        val settings = getSharedPreferences("SettingsPrefs", Context.MODE_PRIVATE)
+        val settings = Prefs.settings(this)
         autoPlayNext = settings.getBoolean("AUTO_PLAY", true)
 
         configureUiForType(streamType)
         setupButtons()
         checkFavoriteStatus()
         setupOverlay()
+        playerView?.setControllerVisibilityListener(
+            StyledPlayerView.ControllerVisibilityListener { visibility ->
+                if (visibility == View.VISIBLE) {
+                    focusPrimaryControl()
+                }
+            }
+        )
         btnPlayPause?.post { btnPlayPause?.requestFocus() }
 
         if (currentStreamId != 0) {
@@ -214,6 +226,7 @@ class PlayerActivity : AppCompatActivity() {
                             name = currentStreamName,
                             streamType = streamType,
                             streamIcon = currentStreamIcon,
+                            directSource = currentDirectUrl,
                             position = currentPos,
                             duration = duration,
                             timestamp = System.currentTimeMillis(),
@@ -227,8 +240,9 @@ class PlayerActivity : AppCompatActivity() {
                 val progress = WatchProgress(
                     streamId = currentStreamId,
                     name = currentStreamName,
-                    streamType = "live",
+                    streamType = streamType,
                     streamIcon = currentStreamIcon,
+                    directSource = currentDirectUrl,
                     position = 0,
                     duration = 0,
                     timestamp = System.currentTimeMillis(),
@@ -255,7 +269,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun configureUiForType(type: String) {
         when (type) {
-            "live" -> {
+            "live", "m3u" -> {
                 btnNext?.visibility = View.VISIBLE
                 btnPrev?.visibility = View.VISIBLE
                 tvLiveBadge?.visibility = View.VISIBLE
@@ -355,6 +369,10 @@ class PlayerActivity : AppCompatActivity() {
         btnSpeed?.setOnClickListener { showSpeedDialog() }
     }
 
+    private fun focusPrimaryControl() {
+        btnPlayPause?.post { btnPlayPause?.requestFocus() }
+    }
+
     private fun setupOverlay() {
         overlayAdapter = OverlayChannelAdapter()
         overlayCatAdapter = OverlayCategoryAdapter { cat ->
@@ -387,7 +405,7 @@ class PlayerActivity : AppCompatActivity() {
         })
     }
 
-    private fun changeChannel(name: String, id: Int, icon: String?) {
+    private fun changeChannel(name: String, id: Int, icon: String?, directUrl: String? = null) {
         saveOrDeleteProgress()
         pendingSeekMs = 0L
         seekHandler.removeCallbacks(seekRunnable)
@@ -399,8 +417,11 @@ class PlayerActivity : AppCompatActivity() {
         currentStreamName = name
         currentStreamId = id
         currentStreamIcon = icon
+        currentDirectUrl = directUrl
         currentExtension = "ts"
         currentSeriesId = null
+        currentSeriesName = null
+        currentSeriesCover = null
         checkFavoriteStatus()
         releasePlayer()
         initializePlayer(id, "ts")
@@ -409,7 +430,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun changeChannelById(streamId: Int) {
         val channel = ChannelManager.getChannelById(streamId)
         if (channel != null) {
-            changeChannel(channel.name, channel.streamId, channel.streamIcon)
+            changeChannel(channel.name, channel.streamId, channel.streamIcon, channel.directSource)
         } else {
             Toast.makeText(this, "Kanal bulunamadı", Toast.LENGTH_SHORT).show()
         }
@@ -451,8 +472,10 @@ class PlayerActivity : AppCompatActivity() {
         currentStreamName = "${episode.episodeNum}. ${episode.title}"
         currentStreamId = episode.id.toIntOrNull() ?: return
         currentStreamIcon = episode.info?.movieImage
+        currentDirectUrl = null
         currentExtension = episode.containerExtension ?: "mp4"
         streamType = "series"
+        currentSeriesName = currentSeriesName ?: intent.getStringExtra("SERIES_NAME")
         checkFavoriteStatus()
         releasePlayer()
         initializePlayer(currentStreamId, currentExtension)
@@ -461,7 +484,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun checkFavoriteStatus() {
         lifecycleScope.launch {
             val dao = AppDatabase.getDatabase(applicationContext).favoriteDao()
-            isFavorite = dao.isFavorite(currentStreamId)
+            isFavorite = dao.isFavorite(getFavoriteTargetId(), getFavoriteTargetType())
             updateFavoriteIcon()
         }
     }
@@ -470,16 +493,17 @@ class PlayerActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val dao = AppDatabase.getDatabase(applicationContext).favoriteDao()
             if (isFavorite) {
-                dao.deleteByStreamId(currentStreamId)
+                dao.deleteByStreamId(getFavoriteTargetId(), getFavoriteTargetType())
                 isFavorite = false
                 Toast.makeText(this@PlayerActivity, "Favorilerden çıkarıldı", Toast.LENGTH_SHORT).show()
             } else {
                 val newFav = FavoriteChannel(
-                    streamId = currentStreamId,
-                    name = currentStreamName,
-                    streamType = streamType,
-                    streamIcon = currentStreamIcon,
-                    categoryName = "Genel"
+                    streamId = getFavoriteTargetId(),
+                    name = getFavoriteTargetName(),
+                    streamType = getFavoriteTargetType(),
+                    streamIcon = getFavoriteTargetIcon(),
+                    categoryName = "Genel",
+                    directSource = currentDirectUrl
                 )
                 dao.insert(newFav)
                 isFavorite = true
@@ -488,6 +512,14 @@ class PlayerActivity : AppCompatActivity() {
             updateFavoriteIcon()
         }
     }
+
+    private fun getFavoriteTargetId(): Int = if (streamType == "series") currentSeriesId ?: currentStreamId else currentStreamId
+
+    private fun getFavoriteTargetType(): String = if (streamType == "series") "series" else streamType
+
+    private fun getFavoriteTargetName(): String = if (streamType == "series") currentSeriesName ?: currentStreamName else currentStreamName
+
+    private fun getFavoriteTargetIcon(): String? = if (streamType == "series") currentSeriesCover ?: currentStreamIcon else currentStreamIcon
 
     private fun updateFavoriteIcon() {
         if (isFavorite) {
@@ -552,18 +584,27 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun initializePlayer(id: Int, ext: String) {
         currentStreamId = id
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val url = prefs.getString("SERVER_URL", "") ?: ""
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        var baseUrl = url
-        if (!baseUrl.endsWith("/")) baseUrl += "/"
-        val isLive = streamType == "live"
-        val vodPath = if (streamType == "series") "series" else "movie"
-        val finalUrl = if (isLive) {
-            "${baseUrl}live/$user/$pass/$id.ts"
+        val direct = currentDirectUrl
+        if ((streamType == "m3u") && direct.isNullOrBlank()) {
+            Toast.makeText(this, "Akış adresi bulunamadı.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val finalUrl = if (!direct.isNullOrBlank()) {
+            direct
         } else {
-            "${baseUrl}$vodPath/$user/$pass/$id.$ext"
+            val prefs = Prefs.user(this)
+            val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
+            val user = prefs.getString(KEY_USERNAME, "") ?: ""
+            val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+            var baseUrl = url
+            if (!baseUrl.endsWith("/")) baseUrl += "/"
+            val isLive = streamType == "live" || streamType == "m3u"
+            val vodPath = if (streamType == "series") "series" else "movie"
+            if (isLive) {
+                "${baseUrl}live/$user/$pass/$id.ts"
+            } else {
+                "${baseUrl}$vodPath/$user/$pass/$id.$ext"
+            }
         }
 
         trackSelector = DefaultTrackSelector(this)
@@ -590,7 +631,7 @@ class PlayerActivity : AppCompatActivity() {
                     exoPlayer?.videoFormat?.let { updateResolutionLabel(it.width, it.height) }
                 }
                 if (state == Player.STATE_ENDED) {
-                    if (autoPlayNext && streamType == "live") {
+                    if (autoPlayNext && streamType == "series") {
                         btnNext?.performClick()
                     } else {
                         playerView?.showController()
@@ -731,6 +772,7 @@ class PlayerActivity : AppCompatActivity() {
             holder.tvNum.text = "#$number"
             Glide.with(holder.itemView.context)
                 .load(item.streamIcon)
+                .fitCenter()
                 .placeholder(R.drawable.bg_placeholder)
                 .error(R.drawable.bg_placeholder)
                 .into(holder.imgLogo)
@@ -803,6 +845,32 @@ class PlayerActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            when (event.keyCode) {
+                KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER -> {
+                    if (playerView?.isControllerFullyVisible != true) {
+                        playerView?.showController()
+                        focusPrimaryControl()
+                        return true
+                    }
+                }
+                KeyEvent.KEYCODE_PROG_RED, KeyEvent.KEYCODE_F1 -> {
+                    btnAudio?.performClick()
+                    return true
+                }
+                KeyEvent.KEYCODE_PROG_BLUE, KeyEvent.KEYCODE_F4 -> {
+                    btnSubtitle?.performClick()
+                    return true
+                }
+                KeyEvent.KEYCODE_PROG_YELLOW, KeyEvent.KEYCODE_F3 -> {
+                    btnAspectRatio?.performClick()
+                    return true
+                }
+                KeyEvent.KEYCODE_PROG_GREEN, KeyEvent.KEYCODE_F2 -> {
+                    btnSpeed?.performClick()
+                    return true
+                }
+            }
             when (event.keyCode) {
                 KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_SPACE -> {
                     btnPlayPause?.performClick()
@@ -871,6 +939,14 @@ class PlayerActivity : AppCompatActivity() {
             playerView?.hideController()
         } else {
             super.onBackPressed()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        timeHandler.post(timeRunnable)
+        if (exoPlayer == null && currentStreamId != 0) {
+            initializePlayer(currentStreamId, currentExtension)
         }
     }
 

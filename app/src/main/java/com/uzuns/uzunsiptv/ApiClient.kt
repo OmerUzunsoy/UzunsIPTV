@@ -3,6 +3,7 @@ package com.uzuns.uzunsiptv
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
@@ -29,6 +30,18 @@ object ApiClient {
         }
 
         val normalized = if (url.endsWith("/")) url else "$url/"
+        val parsedUrl = try {
+            URI(normalized)
+        } catch (_: Exception) {
+            throw IllegalArgumentException("Sunucu adresi geçersiz.")
+        }
+        if (parsedUrl.scheme.isNullOrBlank() || parsedUrl.host.isNullOrBlank()) {
+            throw IllegalArgumentException("Sunucu adresi geçersiz.")
+        }
+        val scheme = parsedUrl.scheme.lowercase()
+        if (scheme != "http" && scheme != "https") {
+            throw IllegalArgumentException("Yalnızca HTTP veya HTTPS adresleri destekleniyor.")
+        }
         return normalized
     }
 

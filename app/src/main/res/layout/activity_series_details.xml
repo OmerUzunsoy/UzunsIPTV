@@ -4,17 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#101010"
+    android:background="@drawable/bg_app_surface"
     android:baselineAligned="false">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.35"
+        android:layout_weight="0.36"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="20dp"
-        android:background="#151515">
+        android:padding="16dp"
+        android:background="@drawable/bg_panel_surface">
 
         <LinearLayout
             android:id="@+id/btnBack"
@@ -31,22 +34,35 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@android:drawable/ic_menu_revert"
-                app:tint="#FFFFFF"/>
+                app:tint="@color/app_text_primary"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GERİ"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_text_primary"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:layout_marginStart="8dp"/>
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnFavoriteSeries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="FAVORİLERE EKLE"
+            android:textAllCaps="false"
+            android:textColor="@color/login_button_text"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="220dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="8dp">
+            android:layout_width="170dp"
+            android:layout_height="250dp"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
             <ImageView
                 android:id="@+id/imgPoster"
                 android:layout_width="match_parent"
@@ -60,9 +76,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Dizi Adı"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textColor="@color/app_text_primary"
+            android:textSize="21sp"
             android:textStyle="bold"
+            android:fontFamily="serif"
             android:gravity="center"
             android:layout_marginTop="12dp"
             android:maxLines="2"
@@ -73,10 +90,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="IMDB 8.9"
-            android:textColor="#000000"
+            android:textColor="@color/login_button_text"
             android:textStyle="bold"
             android:background="@drawable/bg_live_badge"
-            android:backgroundTint="#FBC02D"
+            android:backgroundTint="@color/app_accent_strong"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:layout_marginTop="6dp"/>
@@ -86,10 +103,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Konu yükleniyor..."
-            android:textColor="#AAAAAA"
-            android:textSize="12sp"
-            android:layout_marginTop="12dp"
-            android:lineSpacingExtra="2dp"
+            android:textColor="@color/app_text_secondary"
+            android:textSize="13sp"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="3dp"
             android:maxLines="5"
             android:ellipsize="end"/>
 
@@ -98,45 +115,55 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
+        android:layout_weight="0.64"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="14dp"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="14dp"
+        android:background="@drawable/bg_panel_surface">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SEZONLAR"
-            android:textColor="#03DAC5"
+            android:textColor="@color/app_accent"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:layout_marginBottom="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSeasons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="18dp"
             android:nextFocusDown="@id/rvEpisodes"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="BÖLÜMLER"
-            android:textColor="#03DAC5"
+            android:textColor="@color/app_accent"
             android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:layout_marginBottom="10dp"/>
 
         <ProgressBar
             android:id="@+id/pbEpisodes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="#03DAC5"
+            android:indeterminateTint="@color/app_accent"
             android:layout_gravity="center"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvEpisodes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
             android:nextFocusUp="@id/rvSeasons"/>
 
     </LinearLayout>

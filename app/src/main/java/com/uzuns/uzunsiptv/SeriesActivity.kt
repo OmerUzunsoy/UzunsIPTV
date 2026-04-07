@@ -17,15 +17,22 @@ import android.widget.Toast
 import android.widget.TextView
 import android.app.UiModeManager
 import android.content.res.Configuration
+import android.widget.LinearLayout
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.uzuns.uzunsiptv.data.db.AppDatabase
 import com.uzuns.uzunsiptv.data.db.WatchProgress
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +59,8 @@ class SeriesActivity : AppCompatActivity() {
     private var favoritesList = listOf<SeriesStream>()
     private var apiCategories = listOf<LiveCategory>()
     private val seriesHistoryMap = mutableMapOf<Int, WatchProgress>()
+    private val continueBySeries = mutableMapOf<Int, WatchProgress>()
+    private var seriesByCategory = emptyMap<String, List<SeriesStream>>()
 
     private var activeCategoryId = "ALL"
     private var hasFocusedSeriesOnce = false
@@ -67,6 +76,8 @@ class SeriesActivity : AppCompatActivity() {
     private var previewQueue: List<SeriesStream> = emptyList()
     private var previewIndex = 0
     private val shuffleDelays = listOf(80L, 140L, 220L, 320L, 450L, 600L)
+    private var searchJob: Job? = null
+    private var gridSpanCount = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -89,12 +100,20 @@ class SeriesActivity : AppCompatActivity() {
         val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
         val mode = uiModeManager.currentModeType
         canHidePanel = mode == Configuration.UI_MODE_TYPE_TELEVISION
+        gridSpanCount = resolveGridSpanCount()
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
+        adaptLayoutForPhone()
         setupRecyclerViews()
         setupSearch()
         setupRandomPick()
+
+        if (AccountsStore.getActiveType(this) == TYPE_M3U) {
+            toast("M3U hesaplarında dizi arşivi desteklenmiyor.")
+            finish()
+            return
+        }
         loadLocalData()
         loadData()
         rvCategories.requestFocus()
@@ -104,25 +123,39 @@ class SeriesActivity : AppCompatActivity() {
         val db = AppDatabase.getDatabase(this)
 
         lifecycleScope.launch {
-            db.watchDao().getAllProgress().collect { list ->
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.watchDao().getAllProgress().collect { list ->
                 seriesHistoryMap.clear()
-                val history = list.filter { it.streamType == "series" }
+                continueBySeries.clear()
+                val history = list.filter { it.streamType == "series" }.sortedByDescending { it.timestamp }
                 history.forEach { seriesHistoryMap[it.streamId] = it }
-                continueList = history.sortedByDescending { it.timestamp }.map {
-                    SeriesStream(0, it.name, it.streamId, it.streamIcon, null, null, null, null, null, "CONTINUE", null)
+                history.forEach { progress ->
+                    val seriesId = progress.parentSeriesId ?: progress.streamId
+                    val current = continueBySeries[seriesId]
+                    if (current == null || shouldReplaceSeriesProgress(current, progress)) {
+                        continueBySeries[seriesId] = progress
+                    }
                 }
+                rebuildContinueList()
                 if (activeCategoryId == "CONTINUE") updateDisplayedList(continueList)
                 updateCategoryMenu()
             }
         }
+        }
 
         lifecycleScope.launch {
-            db.favoriteDao().getAllFavorites().collect { list ->
-                favoritesList = list.filter { it.streamType == "series" }.map {
-                    SeriesStream(0, it.name, it.streamId, it.streamIcon, null, null, null, null, null, "FAVORITES", null)
-                }
-                if (activeCategoryId == "FAVORITES") updateDisplayedList(favoritesList)
-                updateCategoryMenu()
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.favoriteDao().getAllFavorites().collect { list ->
+                    favoritesList = list
+                        .filter { it.streamType == "series" }
+                        .mapNotNull { favorite ->
+                            val series = allSeriesList.firstOrNull { it.seriesId == favorite.streamId }
+                            series ?: SeriesStream(0, favorite.name, favorite.streamId, favorite.streamIcon, null, null, null, null, null, "FAVORITES", null)
+                                .takeIf { favorite.streamId != 0 }
+                        }
+        if (activeCategoryId == "FAVORITES") updateDisplayedList(favoritesList)
+        updateCategoryMenu()
+    }
             }
         }
     }
@@ -149,6 +182,7 @@ class SeriesActivity : AppCompatActivity() {
                 activeCategoryId = selectedCategory.categoryId
                 etSearch.text.clear()
                 updateDisplayedList(getListByCategory(activeCategoryId))
+                rvSeries.scrollToPosition(0)
                 // Odak menüde kalsın; sağ oka basınca listeye geçsin
             },
             onNavigateRight = {
@@ -160,10 +194,10 @@ class SeriesActivity : AppCompatActivity() {
         rvCategories.adapter = categoryAdapter
 
         seriesAdapter = SeriesAdapter(
-            spanCount = 5,
+            spanCount = gridSpanCount,
             onClick = { series ->
                 if (activeCategoryId == "CONTINUE") {
-                    playSeriesFromHistory(series.seriesId)
+                    playContinueSeries(series.seriesId)
                 } else {
                     val intent = Intent(this, SeriesDetailsActivity::class.java)
                     intent.putExtra("SERIES_ID", series.seriesId)
@@ -172,11 +206,50 @@ class SeriesActivity : AppCompatActivity() {
                     intent.putExtra("RATING", series.rating)
                     startActivity(intent)
                 }
+            },
+            onLongClick = { series ->
+                when (activeCategoryId) {
+                    "FAVORITES" -> showRemoveFavoriteDialog(series.seriesId, series.name)
+                    "CONTINUE" -> continueBySeries[series.seriesId]?.let { progress ->
+                        showDeleteContinueDialog(progress.streamId, series.name)
+                    }
+                }
             }
         )
-        rvSeries.layoutManager = GridLayoutManager(this, 5)
+        rvSeries.layoutManager = GridLayoutManager(this, gridSpanCount)
         rvSeries.adapter = seriesAdapter
+        rvSeries.setHasFixedSize(true)
         lockRecyclerAtBottom(rvSeries)
+    }
+
+    private fun showRemoveFavoriteDialog(streamId: Int, name: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Favoriden Çıkar")
+            .setMessage("$name favorilerden çıkarılsın mı?")
+            .setPositiveButton("Evet") { _, _ ->
+                lifecycleScope.launch {
+                    AppDatabase.getDatabase(applicationContext)
+                        .favoriteDao()
+                        .deleteByStreamId(streamId, "series")
+                }
+            }
+            .setNegativeButton("Hayır", null)
+            .show()
+    }
+
+    private fun showDeleteContinueDialog(streamId: Int, name: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Listeden Kaldır")
+            .setMessage("$name izlemeye devam et listesinden kaldırılsın mı?")
+            .setPositiveButton("Evet") { _, _ ->
+                lifecycleScope.launch {
+                    AppDatabase.getDatabase(applicationContext)
+                        .watchDao()
+                        .deleteProgress(streamId)
+                }
+            }
+            .setNegativeButton("Hayır", null)
+            .show()
     }
 
     private fun getListByCategory(catId: String): List<SeriesStream> {
@@ -185,7 +258,7 @@ class SeriesActivity : AppCompatActivity() {
             "FAVORITES" -> favoritesList
             "RECENT" -> allSeriesList.sortedByDescending { it.seriesId }.take(40)
             "ALL" -> allSeriesList
-            else -> allSeriesList.filter { it.categoryId == catId }
+            else -> seriesByCategory[catId].orEmpty()
         }
     }
 
@@ -196,10 +269,10 @@ class SeriesActivity : AppCompatActivity() {
 
     private fun loadData() {
         pbLoading.visibility = View.VISIBLE
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        val url = prefs.getString("SERVER_URL", "") ?: ""
+        val prefs = Prefs.user(this)
+        val user = prefs.getString(KEY_USERNAME, "") ?: ""
+        val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
         if (user.isBlank() || pass.isBlank() || url.isBlank()) {
             pbLoading.visibility = View.GONE
             toast("Hesap bilgileri bulunamadı. Lütfen yeniden giriş yapın.")
@@ -231,6 +304,11 @@ class SeriesActivity : AppCompatActivity() {
                 pbLoading.visibility = View.GONE
                 if (response.isSuccessful && response.body() != null) {
                     allSeriesList = response.body()!!
+                    seriesByCategory = allSeriesList.groupBy { it.categoryId }
+                    rebuildContinueList()
+                    favoritesList = favoritesList.mapNotNull { favorite ->
+                        allSeriesList.firstOrNull { it.seriesId == favorite.seriesId } ?: favorite
+                    }
                     updateDisplayedList(getListByCategory(activeCategoryId))
                 } else {
                     toast("Dizi listesi alınamadı (HTTP ${response.code()})")
@@ -249,8 +327,15 @@ class SeriesActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString().lowercase().trim()
-                if (query.isEmpty()) updateDisplayedList(getListByCategory(activeCategoryId))
-                else updateDisplayedList(allSeriesList.filter { it.name.lowercase().contains(query) })
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(250)
+                    val filtered = withContext(Dispatchers.Default) {
+                        if (query.isEmpty()) getListByCategory(activeCategoryId)
+                        else allSeriesList.filter { it.name.lowercase().contains(query) }
+                    }
+                    updateDisplayedList(filtered)
+                }
             }
         })
     }
@@ -269,6 +354,51 @@ class SeriesActivity : AppCompatActivity() {
         intent.putExtra("CONTAINER_EXTENSION", progress.containerExtension ?: "mp4")
         progress.parentSeriesId?.let { intent.putExtra("SERIES_ID", it) }
         startActivity(intent)
+    }
+
+    private fun rebuildContinueList() {
+        continueList = continueBySeries.entries.map { entry ->
+            val seriesId = entry.key
+            val progress = entry.value
+            val series = allSeriesList.firstOrNull { it.seriesId == seriesId }
+            SeriesStream(
+                num = 0,
+                name = series?.name ?: progress.name,
+                seriesId = seriesId,
+                cover = series?.cover ?: progress.streamIcon,
+                plot = series?.plot,
+                cast = series?.cast,
+                director = series?.director,
+                genre = series?.genre,
+                rating = series?.rating,
+                categoryId = "CONTINUE",
+                lastModified = series?.lastModified
+            )
+        }.sortedByDescending { continueBySeries[it.seriesId]?.timestamp ?: 0L }
+    }
+
+    private fun playContinueSeries(seriesId: Int) {
+        val progress = continueBySeries[seriesId] ?: return
+        val parentId = progress.parentSeriesId ?: seriesId
+        val series = allSeriesList.firstOrNull { it.seriesId == parentId }
+        startActivity(
+            Intent(this, SeriesDetailsActivity::class.java).apply {
+                putExtra("SERIES_ID", parentId)
+                putExtra("NAME", series?.name ?: progress.name.substringAfter(". ", progress.name))
+                putExtra("COVER", series?.cover ?: progress.streamIcon)
+                putExtra("RATING", series?.rating)
+                putExtra("AUTO_PLAY_EPISODE_ID", progress.streamId.toString())
+            }
+        )
+    }
+
+    private fun shouldReplaceSeriesProgress(current: WatchProgress, candidate: WatchProgress): Boolean {
+        if (candidate.timestamp != current.timestamp) return candidate.timestamp > current.timestamp
+        return extractEpisodeNumber(candidate.name) >= extractEpisodeNumber(current.name)
+    }
+
+    private fun extractEpisodeNumber(name: String): Int {
+        return name.substringBefore('.').trim().toIntOrNull() ?: 0
     }
 
     override fun onBackPressed() {
@@ -357,6 +487,37 @@ class SeriesActivity : AppCompatActivity() {
         randomTitle.setOnClickListener { }
         randomGo.isFocusable = true
         randomAgain.isFocusable = true
+    }
+
+    private fun resolveGridSpanCount(): Int {
+        val screenWidthDp = resources.configuration.screenWidthDp
+        val isPortrait = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        return when {
+            canHidePanel -> 5
+            screenWidthDp >= 900 -> 5
+            screenWidthDp >= 700 -> 4
+            isPortrait -> 2
+            else -> 3
+        }
+    }
+
+    private fun adaptLayoutForPhone() {
+        if (canHidePanel) return
+        if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) return
+        val root = findViewById<LinearLayout>(R.id.rootSeriesLayout)
+        val categoryPanel = findViewById<View>(R.id.panelCategories)
+        val contentPanel = findViewById<View>(R.id.contentSeriesPanel)
+        root.orientation = LinearLayout.VERTICAL
+        (categoryPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.34f
+        }.also { categoryPanel.layoutParams = it }
+        (contentPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.66f
+        }.also { contentPanel.layoutParams = it }
     }
 
     private fun toast(msg: String) {
@@ -462,6 +623,12 @@ class SeriesActivity : AppCompatActivity() {
         intent.putExtra("COVER", series.cover)
         intent.putExtra("RATING", series.rating)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        randomHandler.removeCallbacksAndMessages(null)
+        searchJob?.cancel()
+        super.onDestroy()
     }
 
     private fun hideCategoryPanel() {

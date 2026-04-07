@@ -8,7 +8,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
 
-    private val prefs by lazy { getSharedPreferences("SettingsPrefs", MODE_PRIVATE) }
+    private val prefs by lazy { Prefs.settings(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)

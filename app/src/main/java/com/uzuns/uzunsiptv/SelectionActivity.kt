@@ -12,18 +12,11 @@ class SelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // --- OTO LOGIN KONTROLÜ (Buraya Taşındı) ---
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val savedUser = prefs.getString("USERNAME", null)
-
-        if (savedUser != null) {
-            // Daha önce giriş yapılmış, seçime gerek yok -> Direkt Dashboard
-            val savedName = prefs.getString("PROFILE_NAME", null)
-            val apiUser = prefs.getString("USERNAME", "Kullanıcı")
-            val expDate = prefs.getString("EXP_DATE", "")
-
+        val active = AccountsStore.getActive(this)
+        if (active != null) {
+            val expDate = active.expDate ?: ""
             val intent = Intent(this, DashboardActivity::class.java)
-            val finalName = if (!savedName.isNullOrEmpty()) savedName else apiUser
-            intent.putExtra("DISPLAY_NAME", finalName)
+            intent.putExtra("DISPLAY_NAME", active.name)
             intent.putExtra("EXP_DATE", expDate)
 
             startActivity(intent)

@@ -4,331 +4,471 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F0F0F"
+    android:background="@drawable/bg_app_surface"
     tools:context=".DashboardActivity">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/bg_panel_surface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/topBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="28dp"
+        android:background="@drawable/bg_toolbar_surface"
         android:gravity="center_vertical"
-        android:padding="20dp"
-        android:background="#1A1A1A"
+        android:orientation="horizontal"
+        android:padding="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            app:cardCornerRadius="22dp"
-            android:layout_marginEnd="12dp">
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="16dp"
+            app:cardBackgroundColor="@color/app_panel_strong"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="0dp">
+
             <ImageView
                 android:id="@+id/imgUserAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_user_avatar"
-                android:scaleType="centerCrop"/>
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_avatar" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tvUsername"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hoşgeldin"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/btnAccounts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
-            android:background="@drawable/bg_universal_selector"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_marginEnd="12dp">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_myplaces"
-                app:tint="#FFFFFF"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hesaplar"
-                android:textColor="#BBBBBB"
-                android:textSize="10sp"/>
+                android:background="@drawable/bg_section_chip"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:text="ANA SALON"
+                android:textColor="@color/app_accent_strong"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Hoş geldin"
+                android:textColor="@color/app_text_primary"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:fontFamily="serif" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnAccounts"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_universal_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                app:tint="@color/app_text_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Hesap"
+                android:textColor="@color/app_text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/bg_universal_selector"
             android:clickable="true"
             android:focusable="true"
-            android:layout_marginEnd="12dp">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@android:drawable/ic_menu_preferences"
-                app:tint="#FFFFFF"/>
+                app:tint="@color/app_text_primary" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ayarlar"
-                android:textColor="#BBBBBB"
-                android:textSize="10sp"/>
+                android:layout_marginTop="6dp"
+                android:text="Ayar"
+                android:textColor="@color/app_text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnShortcuts"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_universal_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@android:drawable/ic_menu_help"
+                app:tint="@color/app_text_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Kısayol"
+                android:textColor="@color/app_text_secondary"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="8dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
             android:background="@drawable/bg_universal_selector"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@android:drawable/ic_lock_power_off"
-                app:tint="#FF5252"/>
+                app:tint="@color/app_danger" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:text="Çıkış"
-                android:textColor="#FF5252"
-                android:textSize="10sp"/>
+                android:textColor="@color/app_danger"
+                android:textSize="11sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/mainCardsRow"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="14dp"
+        android:baselineAligned="false"
         android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/topBar"
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar">
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLive"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_marginEnd="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="@drawable/bg_universal_selector">
+            android:foreground="@drawable/bg_universal_selector"
+            app:cardBackgroundColor="@color/app_card_alt"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/img_live_bg"
+                    android:alpha="0.44"
                     android:scaleType="centerCrop"
-                    android:alpha="0.7"/>
+                    android:src="@drawable/img_live_bg" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/gradient_card_overlay"/>
+                    android:background="@drawable/gradient_card_overlay" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CANLI TV"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold"/>
+                        android:background="@drawable/bg_section_chip"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp"
+                        android:text="CANLI AKIŞ"
+                        android:textColor="@color/app_accent_strong"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Kanallar"
-                        android:textColor="#CCCCCC"
-                        android:textSize="12sp"/>
+                        android:text="Canli TV"
+                        android:textColor="@color/app_text_primary"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:fontFamily="serif" />
                 </LinearLayout>
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardMovies"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginEnd="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/bg_universal_selector">
+            android:orientation="vertical">
 
-            <FrameLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardMovies"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/img_vod_bg"
-                    android:scaleType="centerCrop"
-                    android:alpha="0.7"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_card_overlay"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:padding="16dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="FİLMLER"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="VOD Arşivi"
-                        android:textColor="#CCCCCC"
-                        android:textSize="12sp"/>
-                </LinearLayout>
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
+                android:layout_height="0dp"
+                android:layout_marginBottom="12dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_universal_selector"
+                app:cardBackgroundColor="@color/app_panel_strong"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardSeries"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/bg_universal_selector">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <FrameLayout
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.4"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_vod_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_overlay" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_section_chip"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="6dp"
+                            android:text="SİNEMA"
+                            android:textColor="@color/app_accent_strong"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Filmler"
+                            android:textColor="@color/app_text_primary"
+                            android:textSize="26sp"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSeries"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/bg_universal_selector"
+                app:cardBackgroundColor="@color/app_card"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/img_series_bg"
-                    android:scaleType="centerCrop"
-                    android:alpha="0.7"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/gradient_card_overlay"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:padding="16dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DİZİLER"
-                        android:textColor="#FFFFFF"
-                        android:textSize="22sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Sezonlar"
-                        android:textColor="#CCCCCC"
-                        android:textSize="12sp"/>
-                </LinearLayout>
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.4"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_series_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/gradient_card_overlay" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_section_chip"
+                            android:paddingHorizontal="12dp"
+                            android:paddingVertical="6dp"
+                            android:text="SERİ EVRENİ"
+                            android:textColor="@color/app_accent_strong"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Diziler"
+                            android:textColor="@color/app_text_primary"
+                            android:textSize="26sp"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/bottomBar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="18dp"
         android:gravity="center_vertical"
-        android:padding="16dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tvSignature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Uzuns IPTV\nSalon arayüzü"
+            android:textColor="@color/app_text_muted"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tvLastUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="14dp"
             android:text="Son Güncelleme: ..."
-            android:textColor="#888888"
-            android:textSize="12sp"
-            android:layout_marginEnd="12dp"/>
+            android:textColor="@color/app_text_secondary"
+            android:textSize="12sp" />
 
         <LinearLayout
             android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:background="@drawable/bg_universal_selector"
             android:clickable="true"
             android:focusable="true"
-            android:background="@drawable/bg_universal_selector"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="12dp">
+
             <ProgressBar
                 android:id="@+id/pbLoading"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:indeterminateTint="#03DAC5"
-                android:visibility="gone"
-                android:layout_marginEnd="8dp"/>
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginEnd="8dp"
+                android:indeterminateTint="@color/app_accent"
+                android:visibility="gone" />
+
             <ImageView
                 android:id="@+id/ivRefreshIcon"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
                 android:src="@android:drawable/ic_popup_sync"
-                app:tint="#03DAC5"
-                android:layout_marginEnd="8dp"/>
+                app:tint="@color/app_accent" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GÜNCELLE"
-                android:textColor="#03DAC5"
+                android:text="YENİLE"
+                android:textColor="@color/app_accent"
                 android:textSize="12sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvSignature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Geliştirici: Ömer Uzunsoy\nSürüm: 0.0.26"
-        android:textColor="#444444"
-        android:textSize="12sp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

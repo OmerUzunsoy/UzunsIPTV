@@ -13,6 +13,15 @@ object ChannelHotkeyManager {
         if (normalized.isBlank()) return
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
         val json = JSONObject(prefs.getString(KEY_MAP, "{}") ?: "{}")
+        val keys = json.keys()
+        val staleKeys = mutableListOf<String>()
+        while (keys.hasNext()) {
+            val key = keys.next()
+            if (json.optInt(key, -1) == streamId && key != normalized) {
+                staleKeys.add(key)
+            }
+        }
+        staleKeys.forEach(json::remove)
         json.put(normalized, streamId)
         prefs.edit().putString(KEY_MAP, json.toString()).apply()
     }
@@ -38,14 +47,14 @@ object ChannelHotkeyManager {
 
     fun firstAvailableNumber(context: Context, start: Int = 1): String {
         val prefs = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-        val json = JSONObject(prefs.getString(KEY_MAP, "{}") ?: "{}")
-        val used = mutableSetOf<Int>()
-        val keys = json.keys()
-        while (keys.hasNext()) {
-            val k = keys.next()
-            json.optInt(k, -1).takeIf { it >= 0 }?.let { used.add(it) }
-            k.toIntOrNull()?.let { used.add(it) }
-        }
+        return firstAvailableNumberFromJson(prefs.getString(KEY_MAP, "{}") ?: "{}", start)
+    }
+
+    internal fun firstAvailableNumberFromJson(rawJson: String, start: Int = 1): String {
+        val used = """"(\d+)"\s*:""".toRegex()
+            .findAll(rawJson)
+            .mapNotNull { it.groupValues.getOrNull(1)?.toIntOrNull() }
+            .toMutableSet()
         var candidate = start
         while (used.contains(candidate)) {
             candidate++

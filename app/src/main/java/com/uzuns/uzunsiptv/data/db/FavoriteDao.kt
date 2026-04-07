@@ -9,19 +9,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM favorite_channels ORDER BY id DESC")
+    @Query("SELECT * FROM favorite_channels ORDER BY name COLLATE NOCASE ASC")
     fun getAllFavorites(): Flow<List<FavoriteChannel>>
 
     @Query("SELECT * FROM favorite_channels")
     suspend fun getAllFavoritesOnce(): List<FavoriteChannel>
 
-    @Query("SELECT EXISTS(SELECT * FROM favorite_channels WHERE streamId = :streamId)")
-    suspend fun isFavorite(streamId: Int): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM favorite_channels WHERE streamId = :streamId AND streamType = :streamType)")
+    suspend fun isFavorite(streamId: Int, streamType: String): Boolean
 
-    // Fonksiyon adını 'insert' yaptık (PlayerActivity ile uyumlu olsun diye)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favorite: FavoriteChannel)
 
-    @Query("DELETE FROM favorite_channels WHERE streamId = :streamId")
-    suspend fun deleteByStreamId(streamId: Int)
+    @Query("DELETE FROM favorite_channels WHERE streamId = :streamId AND streamType = :streamType")
+    suspend fun deleteByStreamId(streamId: Int, streamType: String)
 }

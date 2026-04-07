@@ -13,8 +13,8 @@ android {
         applicationId = "com.uzuns.uzunsiptv"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 4
+        versionName = "1.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         lint {
@@ -34,6 +34,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        buildConfig = true
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -60,6 +63,7 @@ dependencies {
     // ViewModel (Veri Yönetimi)
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
     // ROOM DATABASE (VERİTABANI)
     val room_version = "2.6.1"
@@ -69,6 +73,9 @@ dependencies {
 
     // YouTube Player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    // Güvenli SharedPreferences
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // Testler
     testImplementation("junit:junit:4.13.2")

@@ -2,5 +2,22 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="ic_launcher_background">#0F0F0F</color>
+    <color name="ic_launcher_background">#130F0B</color>
+    <color name="app_bg">#120E0A</color>
+    <color name="app_bg_secondary">#1B140E</color>
+    <color name="app_panel">#1E1711</color>
+    <color name="app_panel_strong">#2A1E15</color>
+    <color name="app_card">#251B13</color>
+    <color name="app_card_alt">#312116</color>
+    <color name="app_stroke">#3F2D20</color>
+    <color name="app_text_primary">#FFF7ED</color>
+    <color name="app_text_secondary">#D9C7B4</color>
+    <color name="app_text_muted">#9F8A75</color>
+    <color name="app_accent">#E7B267</color>
+    <color name="app_accent_strong">#FFCB7A</color>
+    <color name="app_accent_deep">#B66A2C</color>
+    <color name="app_success">#89D6A2</color>
+    <color name="app_danger">#FF7A6C</color>
+    <color name="app_focus">#FFF2D8</color>
+    <color name="app_scrim">#C2140F0A</color>
 </resources>

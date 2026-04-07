@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">UzunsIPTV</string>
+    <string name="developer_name">Ömer Uzunsoy</string>
+    <string name="signature_format">Geliştirici: %1$s\nSürüm: %2$s</string>
+    <string name="shortcuts_title">Kısayollar</string>
+    <string name="shortcuts_player">Oynatıcı</string>
+    <string name="shortcuts_navigation">Gezinme</string>
+    <string name="shortcut_red_audio">Kırmızı: Ses dili</string>
+    <string name="shortcut_blue_subtitle">Mavi: Altyazı</string>
+    <string name="shortcut_yellow_aspect">Sarı: En-boy oranı</string>
+    <string name="shortcut_green_speed">Yeşil: Oynatma hızı</string>
+    <string name="shortcut_menu_overlay">Menü: Kanal listesi (Live)</string>
+    <string name="shortcut_numbers">Rakamlar: Kanal kısayolu</string>
 </resources>

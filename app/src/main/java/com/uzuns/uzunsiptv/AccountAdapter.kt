@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 data class AccountItem(
+    val id: String,
     val name: String,
     val server: String,
-    val status: String = "Kayıtlı"
+    val type: String,
+    val isActive: Boolean
 )
 
 class AccountAdapter(
@@ -32,7 +34,13 @@ class AccountAdapter(
         val item = items[position]
         holder.tvName.text = item.name
         holder.tvDetail.text = item.server
-        holder.tvStatus.text = item.status
+        holder.tvStatus.text = if (item.isActive) "AKTİF" else item.type
+        holder.tvStatus.setTextColor(
+            if (item.isActive) android.graphics.Color.parseColor("#03DAC5")
+            else android.graphics.Color.parseColor("#AAAAAA")
+        )
+        val iconRes = if (item.type == TYPE_M3U) android.R.drawable.ic_menu_upload else android.R.drawable.ic_menu_myplaces
+        holder.imgIcon.setImageResource(iconRes)
         holder.itemView.setOnClickListener { onClick(item) }
     }
 

@@ -1,33 +1,49 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.UzunsIPTV" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/app_accent</item>
+        <item name="colorOnPrimary">@color/login_button_text</item>
+        <item name="colorSecondary">@color/app_accent_deep</item>
+        <item name="colorOnSecondary">@color/app_text_primary</item>
+        <item name="android:windowBackground">@color/app_bg</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/app_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColorPrimary">@color/app_text_primary</item>
+        <item name="android:textColorSecondary">@color/app_text_secondary</item>
+        <item name="materialCardViewStyle">@style/Uzuns.Card</item>
     </style>
 
     <style name="Theme.UzunsIPTV" parent="Base.Theme.UzunsIPTV" />
+
+    <style name="Uzuns.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/app_card</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
     <style name="SettingsRow">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingVertical">12dp</item>
+        <item name="android:paddingVertical">14dp</item>
     </style>
 
     <style name="SettingsTitle">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/app_text_primary</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="SettingsSwitch">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:showText">false</item>
-        <item name="android:trackTint">#3303DAC5</item>
-        <item name="android:thumbTint">#03DAC5</item>
+        <item name="android:trackTint">@color/app_panel_strong</item>
+        <item name="android:thumbTint">@color/app_accent</item>
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
     </style>

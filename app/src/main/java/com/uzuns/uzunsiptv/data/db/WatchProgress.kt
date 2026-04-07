@@ -11,6 +11,7 @@ data class WatchProgress(
     val name: String,
     val streamType: String,
     val streamIcon: String?,
+    val directSource: String?,
     val position: Long,
     val duration: Long,
     val timestamp: Long,

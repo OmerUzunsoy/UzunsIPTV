@@ -11,13 +11,14 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class SeriesAdapter(
     private val spanCount: Int,
-    private val onClick: (SeriesStream) -> Unit
+    private val onClick: (SeriesStream) -> Unit,
+    private val onLongClick: ((SeriesStream) -> Unit)? = null
 ) : RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>() {
 
-    private var seriesList = listOf<SeriesStream>()
+    private var seriesItems = listOf<SeriesStream>()
 
     fun updateList(newList: List<SeriesStream>) {
-        seriesList = newList
+        seriesItems = newList.toList()
         notifyDataSetChanged()
     }
 
@@ -28,7 +29,7 @@ class SeriesAdapter(
     }
 
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
-        val series = seriesList[position]
+        val series = seriesItems[position]
 
         holder.tvName.text = series.name
 
@@ -46,11 +47,16 @@ class SeriesAdapter(
             onClick(series)
         }
 
+        holder.itemView.setOnLongClickListener {
+            onLongClick?.invoke(series)
+            onLongClick != null
+        }
+
         holder.itemView.setOnKeyListener { _, keyCode, event ->
             if (event.action == android.view.KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     android.view.KeyEvent.KEYCODE_DPAD_DOWN -> {
-                        val total = seriesList.size
+                        val total = itemCount
                         val lastRowCount = if (total % spanCount == 0) spanCount else total % spanCount
                         if (position >= total - lastRowCount) {
                             return@setOnKeyListener true
@@ -66,7 +72,7 @@ class SeriesAdapter(
         }
     }
 
-    override fun getItemCount() = seriesList.size
+    override fun getItemCount(): Int = seriesItems.size
 
     class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         // ID'ler item_vod.xml ile aynı olmalı

@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingVertical="12dp"
-    android:paddingHorizontal="16dp"
-    android:layout_marginBottom="4dp"
+    android:paddingVertical="14dp"
+    android:paddingHorizontal="18dp"
+    android:layout_marginBottom="6dp"
     android:background="@drawable/bg_menu_item"
     android:clickable="true"
     android:focusable="true">
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Kategori Adı"
-        android:textColor="#BBBBBB"
-        android:textSize="13sp"
+        android:textColor="@color/app_text_secondary"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:maxLines="1"
         android:ellipsize="end"/>

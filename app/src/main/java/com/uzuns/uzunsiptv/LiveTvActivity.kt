@@ -10,13 +10,18 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import android.app.UiModeManager
 import android.content.res.Configuration
+import android.widget.LinearLayout
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uzuns.uzunsiptv.data.db.AppDatabase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +39,8 @@ class LiveTvActivity : AppCompatActivity() {
     private var favoritesList = listOf<LiveStream>()
     private var recentList = listOf<LiveStream>()
     private var apiCategories = listOf<LiveCategory>()
+    private var channelsByCategory = emptyMap<String, List<LiveStream>>()
+    private var isM3uMode = false
 
     private var activeCategoryId = "ALL"
     private var hasFocusedChannelsOnce = false
@@ -45,6 +52,7 @@ class LiveTvActivity : AppCompatActivity() {
     private lateinit var favActions: View
     private lateinit var btnFavAuto: View
     private lateinit var btnFavClear: View
+    private var gridSpanCount = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -58,15 +66,18 @@ class LiveTvActivity : AppCompatActivity() {
         favActions = findViewById(R.id.favActions)
         btnFavAuto = findViewById(R.id.btnFavAuto)
         btnFavClear = findViewById(R.id.btnFavClear)
+        isM3uMode = AccountsStore.getActiveType(this) == TYPE_M3U
 
         val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
         val mode = uiModeManager.currentModeType
         canHidePanel = mode == Configuration.UI_MODE_TYPE_TELEVISION
+        gridSpanCount = resolveGridSpanCount()
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
         btnFavAuto.setOnClickListener { autoAssignFavorites() }
         btnFavClear.setOnClickListener { clearAssignments() }
 
+        adaptLayoutForPhone()
         setupRecyclerViews()
         loadLocalData()
         loadData()
@@ -77,57 +88,59 @@ class LiveTvActivity : AppCompatActivity() {
         val db = AppDatabase.getDatabase(this)
 
         lifecycleScope.launch {
-            db.favoriteDao().getAllFavorites().collect { favs ->
-                favoritesList = favs
-                    .filter { it.streamType == "live" }
-                    .map {
-                        // EKSİK PARAMETRELER DOLDURULDU
-                        LiveStream(
-                            num = "0",
-                            name = it.name,
-                            streamType = "live",
-                            streamId = it.streamId,
-                            streamIcon = it.streamIcon,
-                            epgChannelId = null,
-                            added = null,
-                            categoryId = "",
-                            customSid = null,
-                            tvArchive = null,
-                            directSource = "",
-                            tvArchiveDuration = null
-                        )
-                    }
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.favoriteDao().getAllFavorites().collect { favs ->
+                    favoritesList = favs
+                        .filter { if (isM3uMode) it.streamType == "m3u" else it.streamType == "live" }
+                        .map {
+                            LiveStream(
+                                num = "0",
+                                name = it.name,
+                                streamType = if (isM3uMode) "m3u" else "live",
+                                streamId = it.streamId,
+                                streamIcon = it.streamIcon,
+                                epgChannelId = null,
+                                added = null,
+                                categoryId = "",
+                                customSid = null,
+                                tvArchive = null,
+                                directSource = it.directSource,
+                                tvArchiveDuration = null
+                            )
+                        }
 
-                if (activeCategoryId == "FAVORITES") channelAdapter.updateList(favoritesList)
-                updateCategoryMenu()
+                    if (activeCategoryId == "FAVORITES") channelAdapter.updateList(favoritesList)
+                    updateCategoryMenu()
+                }
             }
         }
 
         lifecycleScope.launch {
-            db.watchDao().getAllProgress().collect { history ->
-                recentList = history
-                    .filter { it.streamType == "live" }
-                    .take(10)
-                    .map {
-                        // EKSİK PARAMETRELER DOLDURULDU
-                        LiveStream(
-                            num = "0",
-                            name = it.name,
-                            streamType = "live",
-                            streamId = it.streamId,
-                            streamIcon = it.streamIcon,
-                            epgChannelId = null,
-                            added = null,
-                            categoryId = "",
-                            customSid = null,
-                            tvArchive = null,
-                            directSource = "",
-                            tvArchiveDuration = null
-                        )
-                    }
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.watchDao().getAllProgress().collect { history ->
+                    recentList = history
+                        .filter { if (isM3uMode) it.streamType == "m3u" else it.streamType == "live" }
+                        .take(10)
+                        .map {
+                            LiveStream(
+                                num = "0",
+                                name = it.name,
+                                streamType = if (isM3uMode) "m3u" else "live",
+                                streamId = it.streamId,
+                                streamIcon = it.streamIcon,
+                                epgChannelId = null,
+                                added = null,
+                                categoryId = "",
+                                customSid = null,
+                                tvArchive = null,
+                                directSource = it.directSource,
+                                tvArchiveDuration = null
+                            )
+                        }
 
-                if (activeCategoryId == "RECENT") channelAdapter.updateList(recentList)
-                updateCategoryMenu()
+                    if (activeCategoryId == "RECENT") channelAdapter.updateList(recentList)
+                    updateCategoryMenu()
+                }
             }
         }
     }
@@ -152,6 +165,7 @@ class LiveTvActivity : AppCompatActivity() {
             onClick = { selectedCategory ->
                 activeCategoryId = selectedCategory.categoryId
                 channelAdapter.updateList(getListByCategory(activeCategoryId))
+                rvChannels.scrollToPosition(0)
                 // Odak menüde kalsın; sağ oka basınca listeye geçsin
             },
             onNavigateRight = {
@@ -175,16 +189,72 @@ class LiveTvActivity : AppCompatActivity() {
 
                 val intent = Intent(this, PlayerActivity::class.java)
                 intent.putExtra("STREAM_ID", channel.streamId)
-                intent.putExtra("STREAM_TYPE", "live")
+                intent.putExtra("STREAM_TYPE", if (isM3uMode) "m3u" else "live")
                 intent.putExtra("STREAM_NAME", channel.name)
                 intent.putExtra("STREAM_ICON", channel.streamIcon)
+                if (isM3uMode) {
+                    intent.putExtra("DIRECT_URL", channel.directSource)
+                }
                 startActivity(intent)
             },
-            onLongClick = { channel -> showHotkeyDialog(channel) }
+            onLongClick = { channel ->
+                if (activeCategoryId == "FAVORITES") {
+                    showRemoveFavoriteDialog(channel.streamId, channel.name, if (isM3uMode) "m3u" else "live")
+                } else {
+                    showHotkeyDialog(channel)
+                }
+            }
         )
-        rvChannels.layoutManager = GridLayoutManager(this, 4)
+        rvChannels.layoutManager = GridLayoutManager(this, gridSpanCount)
         rvChannels.adapter = channelAdapter
+        rvChannels.setHasFixedSize(true)
         lockRecyclerAtBottom(rvChannels)
+    }
+
+    private fun showRemoveFavoriteDialog(streamId: Int, name: String, streamType: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Favoriden Çıkar")
+            .setMessage("$name favorilerden çıkarılsın mı?")
+            .setPositiveButton("Evet") { _, _ ->
+                lifecycleScope.launch {
+                    AppDatabase.getDatabase(applicationContext)
+                        .favoriteDao()
+                        .deleteByStreamId(streamId, streamType)
+                }
+            }
+            .setNegativeButton("Hayır", null)
+            .show()
+    }
+
+    private fun resolveGridSpanCount(): Int {
+        val screenWidthDp = resources.configuration.screenWidthDp
+        val isPortrait = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        return when {
+            canHidePanel -> 4
+            screenWidthDp >= 900 -> 4
+            screenWidthDp >= 700 -> 3
+            isPortrait -> 2
+            else -> 3
+        }
+    }
+
+    private fun adaptLayoutForPhone() {
+        if (canHidePanel) return
+        if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) return
+        val root = findViewById<LinearLayout>(R.id.rootLiveTvLayout)
+        val categoryPanel = findViewById<View>(R.id.panelCategories)
+        val contentPanel = findViewById<View>(R.id.contentLivePanel)
+        root.orientation = LinearLayout.VERTICAL
+        (categoryPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.36f
+        }.also { categoryPanel.layoutParams = it }
+        (contentPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.64f
+        }.also { contentPanel.layoutParams = it }
     }
 
     private fun getListByCategory(catId: String): List<LiveStream> {
@@ -192,16 +262,20 @@ class LiveTvActivity : AppCompatActivity() {
             "RECENT" -> recentList
             "FAVORITES" -> favoritesList
             "ALL" -> allChannelsList
-            else -> allChannelsList.filter { it.categoryId == catId }
+            else -> channelsByCategory[catId].orEmpty()
         }
     }
 
     private fun loadData() {
         pbLoading.visibility = View.VISIBLE
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        val url = prefs.getString("SERVER_URL", "") ?: ""
+        if (isM3uMode) {
+            loadM3uData()
+            return
+        }
+        val prefs = Prefs.user(this)
+        val user = prefs.getString(KEY_USERNAME, "") ?: ""
+        val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
         if (user.isBlank() || pass.isBlank() || url.isBlank()) {
             pbLoading.visibility = View.GONE
             toast("Hesap bilgileri bulunamadı. Lütfen yeniden giriş yapın.")
@@ -227,13 +301,51 @@ class LiveTvActivity : AppCompatActivity() {
         })
     }
 
+    private fun loadM3uData() {
+        val prefs = Prefs.user(this)
+        val url = prefs.getString(KEY_M3U_URL, "") ?: ""
+        if (url.isBlank()) {
+            pbLoading.visibility = View.GONE
+            toast("M3U URL bulunamadı. Lütfen yeniden ekleyin.")
+            return
+        }
+        lifecycleScope.launch {
+            try {
+                val channels = M3uRepository.loadOrFetch(this@LiveTvActivity, url, forceRefresh = false)
+                allChannelsList = channels
+                channelsByCategory = buildChannelIndex(channels)
+                apiCategories = buildM3uCategories(channels)
+                updateCategoryMenu()
+                channelAdapter.updateList(getListByCategory(activeCategoryId))
+                pbLoading.visibility = View.GONE
+            } catch (e: Exception) {
+                pbLoading.visibility = View.GONE
+                toast("M3U yüklenemedi: ${e.localizedMessage}")
+            }
+        }
+    }
+
+    private fun buildM3uCategories(list: List<LiveStream>): List<LiveCategory> {
+        val groups = list.mapNotNull { it.categoryId?.trim() }.filter { it.isNotBlank() }.distinct().sorted()
+        return groups.map { LiveCategory(it, it, "0") }
+    }
+
+    private suspend fun buildChannelIndex(list: List<LiveStream>): Map<String, List<LiveStream>> {
+        return withContext(Dispatchers.Default) {
+            list.groupBy { it.categoryId.orEmpty() }
+        }
+    }
+
     private fun fetchAllChannels(api: XtreamApi, user: String, pass: String) {
         api.getLiveStreams(u = user, p = pass).enqueue(object : Callback<List<LiveStream>> {
             override fun onResponse(call: Call<List<LiveStream>>, response: Response<List<LiveStream>>) {
                 pbLoading.visibility = View.GONE
                 if (response.isSuccessful && response.body() != null) {
                     allChannelsList = response.body()!!
-                    channelAdapter.updateList(getListByCategory(activeCategoryId))
+                    lifecycleScope.launch {
+                        channelsByCategory = buildChannelIndex(allChannelsList)
+                        channelAdapter.updateList(getListByCategory(activeCategoryId))
+                    }
                 } else {
                     toast("Kanal listesi alınamadı (HTTP ${response.code()})")
                 }
@@ -393,7 +505,7 @@ class LiveTvActivity : AppCompatActivity() {
     private fun autoAssignFavorites() {
         if (favoritesList.isNotEmpty()) {
             ChannelHotkeyManager.assignSequential(this, favoritesList)
-            channelAdapter.notifyDataSetChanged()
+            channelAdapter.updateList(getListByCategory(activeCategoryId))
             toast("Favorilere 1'den başlayarak numara atandı")
         } else {
             toast("Favori kanal yok")
@@ -402,7 +514,7 @@ class LiveTvActivity : AppCompatActivity() {
 
     private fun clearAssignments() {
         ChannelHotkeyManager.clearAll(this)
-        channelAdapter.notifyDataSetChanged()
+        channelAdapter.updateList(getListByCategory(activeCategoryId))
         toast("Tüm atamalar silindi")
     }
 }

@@ -68,10 +68,10 @@ class LiveChannelActivity : AppCompatActivity() {
     private fun fetchChannels(categoryId: String) {
         pbLoading.visibility = View.VISIBLE
 
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        val url = prefs.getString("SERVER_URL", "") ?: ""
+        val prefs = Prefs.user(this)
+        val user = prefs.getString(KEY_USERNAME, "") ?: ""
+        val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
 
         val apiService = ApiClient.getClient(url).create(XtreamApi::class.java)
 

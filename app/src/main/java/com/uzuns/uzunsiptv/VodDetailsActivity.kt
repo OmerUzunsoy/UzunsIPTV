@@ -84,10 +84,10 @@ class VodDetailsActivity : AppCompatActivity() {
     }
 
     private fun fetchMovieDetails() {
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        val url = prefs.getString("SERVER_URL", "") ?: ""
+        val prefs = Prefs.user(this)
+        val user = prefs.getString(KEY_USERNAME, "") ?: ""
+        val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
 
         val api = ApiClient.getClient(url).create(XtreamApi::class.java)
 
@@ -97,14 +97,14 @@ class VodDetailsActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     val info = response.body()!!.info
 
-                    tvDescription.text = info.plot ?: "Açıklama bulunamadı."
-                    tvGenre.text = "Tür: ${info.genre ?: "Bilinmiyor"}"
-                    tvDuration.text = "Süre: ${info.duration ?: "-"}"
-                    tvCast.text = info.cast ?: "-"
+                    tvDescription.text = info.plot?.takeIf { it.isNotBlank() } ?: ""
+                    tvGenre.text = info.genre?.takeIf { it.isNotBlank() }?.let { "Tür: $it" } ?: ""
+                    tvDuration.text = info.duration?.takeIf { it.isNotBlank() }?.let { "Süre: $it" } ?: ""
+                    tvCast.text = info.cast?.takeIf { it.isNotBlank() } ?: ""
                 }
             }
             override fun onFailure(call: Call<VodInfoResponse>, t: Throwable) {
-                tvDescription.text = "Detaylar yüklenemedi."
+                tvDescription.text = ""
             }
         })
     }

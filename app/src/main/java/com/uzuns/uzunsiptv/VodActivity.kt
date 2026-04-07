@@ -18,8 +18,10 @@ import android.widget.TextView
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.app.UiModeManager
 import android.content.res.Configuration
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +29,11 @@ import com.bumptech.glide.Glide
 import com.uzuns.uzunsiptv.data.db.AppDatabase
 import com.uzuns.uzunsiptv.data.db.FavoriteChannel
 import com.uzuns.uzunsiptv.data.db.WatchProgress
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,6 +63,7 @@ class VodActivity : AppCompatActivity() {
     private val continueHistoryMap = mutableMapOf<Int, WatchProgress>()
     private var favoriteEntities = listOf<FavoriteChannel>()
     private var movieMetaMap = mapOf<Int, VodStream>()
+    private var moviesByCategory = emptyMap<String, List<VodStream>>()
 
     private var activeCategoryId = "ALL" // Başlangıç
     private var hasFocusedMoviesOnce = false
@@ -72,6 +79,8 @@ class VodActivity : AppCompatActivity() {
     private var previewQueue: List<VodStream> = emptyList()
     private var previewIndex = 0
     private val shuffleDelays = listOf(80L, 140L, 220L, 320L, 450L, 600L)
+    private var searchJob: Job? = null
+    private var gridSpanCount = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -94,12 +103,20 @@ class VodActivity : AppCompatActivity() {
         val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
         val mode = uiModeManager.currentModeType
         canHidePanel = mode == Configuration.UI_MODE_TYPE_TELEVISION
+        gridSpanCount = resolveGridSpanCount()
 
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
+        adaptLayoutForPhone()
         setupRecyclerViews()
         setupSearch()
         setupRandomPick()
+
+        if (AccountsStore.getActiveType(this) == TYPE_M3U) {
+            toast("M3U hesaplarında film arşivi desteklenmiyor.")
+            finish()
+            return
+        }
 
         loadLocalData() // Veritabanını dinle
         loadApiData()   // İnternetten çek
@@ -111,18 +128,22 @@ class VodActivity : AppCompatActivity() {
 
         // 1. İZLEMEYE DEVAM ET
         lifecycleScope.launch {
-            db.watchDao().getAllProgress().collect { progressList ->
-                continueHistoryMap.clear()
-                progressList.filter { it.streamType == "movie" }.forEach { continueHistoryMap[it.streamId] = it }
-                rebuildContinueList()
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.watchDao().getAllProgress().collect { progressList ->
+                    continueHistoryMap.clear()
+                    progressList.filter { it.streamType == "movie" }.forEach { continueHistoryMap[it.streamId] = it }
+                    rebuildContinueList()
+                }
             }
         }
 
         // 2. FAVORİLER
         lifecycleScope.launch {
-            db.favoriteDao().getAllFavorites().collect { favList ->
-                favoriteEntities = favList
-                rebuildFavoriteList()
+            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                db.favoriteDao().getAllFavorites().collect { favList ->
+                    favoriteEntities = favList
+                    rebuildFavoriteList()
+                }
             }
         }
     }
@@ -143,10 +164,10 @@ class VodActivity : AppCompatActivity() {
 
     private fun loadApiData() {
         pbLoading.visibility = View.VISIBLE
-        val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val user = prefs.getString("USERNAME", "") ?: ""
-        val pass = prefs.getString("PASSWORD", "") ?: ""
-        val url = prefs.getString("SERVER_URL", "") ?: ""
+        val prefs = Prefs.user(this)
+        val user = prefs.getString(KEY_USERNAME, "") ?: ""
+        val pass = prefs.getString(KEY_PASSWORD, "") ?: ""
+        val url = prefs.getString(KEY_SERVER_URL, "") ?: ""
         if (user.isBlank() || pass.isBlank() || url.isBlank()) {
             pbLoading.visibility = View.GONE
             toast("Hesap bilgileri bulunamadı. Lütfen yeniden giriş yapın.")
@@ -179,6 +200,7 @@ class VodActivity : AppCompatActivity() {
                 if (response.isSuccessful && response.body() != null) {
                     allMoviesList = response.body()!!
                     movieMetaMap = allMoviesList.associateBy { it.streamId }
+                    moviesByCategory = allMoviesList.groupBy { it.categoryId }
                     rebuildContinueList()
                     rebuildFavoriteList()
                     updateDisplayedList(getListByCategory(activeCategoryId))
@@ -199,7 +221,7 @@ class VodActivity : AppCompatActivity() {
             "FAVORITES" -> favoritesList
             "RECENT" -> allMoviesList.sortedByDescending { it.streamId }.take(40)
             "ALL" -> allMoviesList
-            else -> allMoviesList.filter { it.categoryId == catId }
+            else -> moviesByCategory[catId].orEmpty()
         }
     }
 
@@ -225,7 +247,7 @@ class VodActivity : AppCompatActivity() {
         rvCategories.adapter = categoryAdapter
 
         vodAdapter = VodAdapter(
-            spanCount = 5,
+            spanCount = gridSpanCount,
             onClick = { movie ->
                 if (activeCategoryId == "CONTINUE") {
                     playMovieFromHistory(movie)
@@ -240,11 +262,15 @@ class VodActivity : AppCompatActivity() {
                 }
             },
             onLongClick = { movie ->
-                if (activeCategoryId == "CONTINUE") showDeleteDialog(movie)
+                when (activeCategoryId) {
+                    "CONTINUE" -> showDeleteDialog(movie)
+                    "FAVORITES" -> showRemoveFavoriteDialog(movie.streamId, movie.name, "movie")
+                }
             }
         )
-        rvMovies.layoutManager = GridLayoutManager(this, 5)
+        rvMovies.layoutManager = GridLayoutManager(this, gridSpanCount)
         rvMovies.adapter = vodAdapter
+        rvMovies.setHasFixedSize(true)
         lockRecyclerAtBottom(rvMovies)
     }
 
@@ -261,14 +287,67 @@ class VodActivity : AppCompatActivity() {
             .show()
     }
 
+    private fun showRemoveFavoriteDialog(streamId: Int, name: String, streamType: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Favoriden Çıkar")
+            .setMessage("$name favorilerden çıkarılsın mı?")
+            .setPositiveButton("Evet") { _, _ ->
+                lifecycleScope.launch {
+                    AppDatabase.getDatabase(applicationContext)
+                        .favoriteDao()
+                        .deleteByStreamId(streamId, streamType)
+                }
+            }
+            .setNegativeButton("Hayır", null)
+            .show()
+    }
+
+    private fun resolveGridSpanCount(): Int {
+        val screenWidthDp = resources.configuration.screenWidthDp
+        val isPortrait = resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+        return when {
+            canHidePanel -> 5
+            screenWidthDp >= 900 -> 5
+            screenWidthDp >= 700 -> 4
+            isPortrait -> 2
+            else -> 3
+        }
+    }
+
+    private fun adaptLayoutForPhone() {
+        if (canHidePanel) return
+        if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) return
+        val root = findViewById<LinearLayout>(R.id.rootVodLayout)
+        val categoryPanel = findViewById<View>(R.id.panelCategories)
+        val contentPanel = findViewById<View>(R.id.contentVodPanel)
+        root.orientation = LinearLayout.VERTICAL
+        (categoryPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.34f
+        }.also { categoryPanel.layoutParams = it }
+        (contentPanel.layoutParams as LinearLayout.LayoutParams).apply {
+            width = LinearLayout.LayoutParams.MATCH_PARENT
+            height = 0
+            weight = 0.66f
+        }.also { contentPanel.layoutParams = it }
+    }
+
     private fun setupSearch() {
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 val query = s.toString().lowercase().trim()
-                if (query.isEmpty()) updateDisplayedList(getListByCategory(activeCategoryId))
-                else updateDisplayedList(allMoviesList.filter { it.name.lowercase().contains(query) })
+                searchJob?.cancel()
+                searchJob = lifecycleScope.launch {
+                    delay(250)
+                    val filtered = withContext(Dispatchers.Default) {
+                        if (query.isEmpty()) getListByCategory(activeCategoryId)
+                        else allMoviesList.filter { it.name.lowercase().contains(query) }
+                    }
+                    updateDisplayedList(filtered)
+                }
             }
         })
     }
@@ -519,6 +598,12 @@ class VodActivity : AppCompatActivity() {
         intent.putExtra("RATING", movie.rating)
         intent.putExtra("EXTENSION", movie.containerExtension)
         startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        randomHandler.removeCallbacksAndMessages(null)
+        searchJob?.cancel()
+        super.onDestroy()
     }
 
     private fun toast(msg: String) {

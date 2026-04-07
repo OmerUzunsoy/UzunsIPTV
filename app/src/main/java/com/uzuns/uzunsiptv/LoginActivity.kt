@@ -89,21 +89,22 @@ class LoginActivity : AppCompatActivity() {
                             val apiUsername = loginData.userInfo.username ?: user
                             val expDate = loginData.userInfo.expDate ?: ""
 
-                            // KAYDET
-                            val prefs = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-                            prefs.edit().apply {
-                                putString("SERVER_URL", url)
-                                putString("USERNAME", user)
-                                putString("PASSWORD", pass)
-                                putString("PROFILE_NAME", profileName)
-                                putString("EXP_DATE", expDate)
-                                apply()
-                            }
+                            val finalName = if (profileName.isNotEmpty()) profileName else apiUsername
+                            val account = StoredAccount(
+                                id = buildAccountId(TYPE_XTREAM, url, user, finalName),
+                                type = TYPE_XTREAM,
+                                name = finalName,
+                                url = url,
+                                username = user,
+                                password = pass,
+                                expDate = expDate
+                            )
+                            AccountsStore.save(this@LoginActivity, account)
+                            AccountsStore.setActive(this@LoginActivity, account)
 
                             Toast.makeText(applicationContext, "Giriş Başarılı!", Toast.LENGTH_SHORT).show()
 
                             val intent = Intent(this@LoginActivity, DashboardActivity::class.java)
-                            val finalName = if (profileName.isNotEmpty()) profileName else apiUsername
                             intent.putExtra("DISPLAY_NAME", finalName)
                             intent.putExtra("EXP_DATE", expDate)
 
