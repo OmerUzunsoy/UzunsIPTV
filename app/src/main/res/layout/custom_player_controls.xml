@@ -40,7 +40,7 @@
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="5dp"
                 android:text="HD"
-                android:textColor="#03DAC5"
+                android:textColor="@color/app_accent_strong"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -142,10 +142,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            app:played_color="#03DAC5"
+            app:played_color="@color/app_accent"
             app:unplayed_color="#40FFFFFF"
             app:buffered_color="#80FFFFFF"
-            app:scrubber_color="#03DAC5"
+            app:scrubber_color="@color/app_focus"
             android:visibility="gone"/>
 
         <LinearLayout

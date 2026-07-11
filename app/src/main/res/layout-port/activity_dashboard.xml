@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/bg_app_surface" android:clipToPadding="false"
+    android:fillViewport="true" android:paddingStart="16dp" android:paddingTop="18dp"
+    android:paddingEnd="16dp" android:paddingBottom="24dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+
+        <LinearLayout android:id="@+id/topBar" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="@drawable/bg_toolbar_surface" android:gravity="center_vertical" android:orientation="horizontal" android:padding="16dp">
+            <androidx.cardview.widget.CardView android:layout_width="54dp" android:layout_height="54dp" android:layout_marginEnd="13dp" app:cardBackgroundColor="@color/app_panel_strong" app:cardCornerRadius="27dp" app:cardElevation="0dp">
+                <ImageView android:id="@+id/imgUserAvatar" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="8dp" android:scaleType="centerCrop" android:src="@drawable/ic_user_avatar" android:contentDescription="Profil" />
+            </androidx.cardview.widget.CardView>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="İYİ SEYİRLER" android:textColor="@color/app_accent_strong" android:textSize="10sp" android:textStyle="bold" />
+                <TextView android:id="@+id/tvUsername" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:ellipsize="end" android:fontFamily="serif" android:maxLines="2" android:text="Hoş geldin" android:textColor="@color/app_text_primary" android:textSize="22sp" android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:baselineAligned="false" android:orientation="horizontal">
+            <LinearLayout android:id="@+id/btnAccounts" android:layout_width="0dp" android:layout_height="68dp" android:layout_marginEnd="5dp" android:layout_weight="1" android:background="@drawable/bg_universal_selector" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+                <ImageView android:layout_width="23dp" android:layout_height="23dp" android:src="@android:drawable/ic_menu_myplaces" app:tint="@color/app_text_primary" android:contentDescription="" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Hesap" android:textColor="@color/app_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/btnShortcuts" android:layout_width="0dp" android:layout_height="68dp" android:layout_marginHorizontal="5dp" android:layout_weight="1" android:background="@drawable/bg_universal_selector" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+                <ImageView android:layout_width="23dp" android:layout_height="23dp" android:src="@android:drawable/ic_menu_help" app:tint="@color/app_text_primary" android:contentDescription="" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Kısayol" android:textColor="@color/app_text_secondary" android:textSize="11sp" />
+            </LinearLayout>
+            <LinearLayout android:id="@+id/btnLogout" android:layout_width="0dp" android:layout_height="68dp" android:layout_marginStart="5dp" android:layout_weight="1" android:background="@drawable/bg_universal_selector" android:clickable="true" android:focusable="true" android:gravity="center" android:orientation="vertical">
+                <ImageView android:layout_width="23dp" android:layout_height="23dp" android:src="@android:drawable/ic_lock_power_off" app:tint="@color/app_danger" android:contentDescription="" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Çıkış" android:textColor="@color/app_danger" android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:layout_marginBottom="11dp" android:text="Ne izlemek istersin?" android:textColor="@color/app_text_primary" android:textSize="20sp" android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView android:id="@+id/cardLive" android:layout_width="match_parent" android:layout_height="188dp" android:clickable="true" android:focusable="true" android:foreground="@drawable/bg_universal_selector" app:cardBackgroundColor="@color/app_card_alt" app:cardCornerRadius="22dp" app:cardElevation="0dp">
+            <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0.5" android:scaleType="centerCrop" android:src="@drawable/img_live_bg" android:contentDescription="" />
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="bottom" android:orientation="vertical" android:padding="20dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_section_chip" android:paddingHorizontal="10dp" android:paddingVertical="5dp" android:text="CANLI AKIŞ" android:textColor="@color/app_accent_strong" android:textSize="10sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="9dp" android:fontFamily="serif" android:text="Canlı TV" android:textColor="@color/app_text_primary" android:textSize="29sp" android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="168dp" android:layout_marginTop="12dp" android:baselineAligned="false" android:orientation="horizontal">
+            <androidx.cardview.widget.CardView android:id="@+id/cardMovies" android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginEnd="6dp" android:layout_weight="1" android:clickable="true" android:focusable="true" android:foreground="@drawable/bg_universal_selector" app:cardBackgroundColor="@color/app_panel_strong" app:cardCornerRadius="22dp" app:cardElevation="0dp">
+                <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0.45" android:scaleType="centerCrop" android:src="@drawable/img_vod_bg" android:contentDescription="" /><View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="bottom" android:orientation="vertical" android:padding="15dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SİNEMA" android:textColor="@color/app_accent_strong" android:textSize="10sp" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:fontFamily="serif" android:text="Filmler" android:textColor="@color/app_text_primary" android:textSize="24sp" android:textStyle="bold" /></LinearLayout>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView android:id="@+id/cardSeries" android:layout_width="0dp" android:layout_height="match_parent" android:layout_marginStart="6dp" android:layout_weight="1" android:clickable="true" android:focusable="true" android:foreground="@drawable/bg_universal_selector" app:cardBackgroundColor="@color/app_card" app:cardCornerRadius="22dp" app:cardElevation="0dp">
+                <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0.45" android:scaleType="centerCrop" android:src="@drawable/img_series_bg" android:contentDescription="" /><View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="bottom" android:orientation="vertical" android:padding="15dp"><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SERİLER" android:textColor="@color/app_accent_strong" android:textSize="10sp" android:textStyle="bold" /><TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:fontFamily="serif" android:text="Diziler" android:textColor="@color/app_text_primary" android:textSize="24sp" android:textStyle="bold" /></LinearLayout>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/bottomBar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <TextView android:id="@+id/tvSignature" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:textColor="@color/app_text_secondary" android:textSize="12sp" />
+            <TextView android:id="@+id/tvLastUpdate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="8dp" android:maxWidth="140dp" android:textColor="@color/app_text_secondary" android:textSize="11sp" />
+            <LinearLayout android:id="@+id/btnRefresh" android:layout_width="48dp" android:layout_height="48dp" android:background="@drawable/bg_universal_selector" android:clickable="true" android:focusable="true" android:gravity="center">
+                <ImageView android:id="@+id/ivRefreshIcon" android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_popup_sync" app:tint="@color/app_accent_strong" android:contentDescription="Yenile" />
+                <ProgressBar android:id="@+id/pbLoading" android:layout_width="22dp" android:layout_height="22dp" android:indeterminateTint="@color/app_accent" android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

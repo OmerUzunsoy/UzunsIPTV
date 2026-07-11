@@ -24,29 +24,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="28dp"
         android:background="@drawable/bg_toolbar_surface"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="18dp"
+        android:padding="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="12dp"
             app:cardBackgroundColor="@color/app_panel_strong"
-            app:cardCornerRadius="32dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/imgUserAvatar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
+                android:padding="4dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_user_avatar" />
         </androidx.cardview.widget.CardView>
@@ -61,8 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_section_chip"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
                 android:text="ANA SALON"
                 android:textColor="@color/app_accent_strong"
                 android:textSize="11sp"
@@ -72,36 +72,36 @@
                 android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="4dp"
                 android:text="Hoş geldin"
                 android:textColor="@color/app_text_primary"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:fontFamily="serif" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnAccounts"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_width="72dp"
+            android:layout_height="52dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_universal_selector"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="4dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@android:drawable/ic_menu_myplaces"
                 app:tint="@color/app_text_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="2dp"
                 android:text="Hesap"
                 android:textColor="@color/app_text_secondary"
                 android:textSize="11sp"
@@ -109,55 +109,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnSettings"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_universal_selector"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@android:drawable/ic_menu_preferences"
-                app:tint="@color/app_text_primary" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Ayar"
-                android:textColor="@color/app_text_secondary"
-                android:textSize="11sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/btnShortcuts"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_width="72dp"
+            android:layout_height="52dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/bg_universal_selector"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="4dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@android:drawable/ic_menu_help"
                 app:tint="@color/app_text_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="2dp"
                 android:text="Kısayol"
                 android:textColor="@color/app_text_secondary"
                 android:textSize="11sp"
@@ -166,25 +138,25 @@
 
         <LinearLayout
             android:id="@+id/btnLogout"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_width="72dp"
+            android:layout_height="52dp"
             android:background="@drawable/bg_universal_selector"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="4dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:src="@android:drawable/ic_lock_power_off"
                 app:tint="@color/app_danger" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="2dp"
                 android:text="Çıkış"
                 android:textColor="@color/app_danger"
                 android:textSize="11sp"
@@ -212,7 +184,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
-            android:layout_weight="1"
+            android:layout_weight="1.18"
             android:clickable="true"
             android:focusable="true"
             android:foreground="@drawable/bg_universal_selector"
@@ -273,7 +245,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.82"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
@@ -307,9 +279,11 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -322,14 +296,10 @@
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="Filmler"
                             android:textColor="@color/app_text_primary"
                             android:textSize="26sp"
@@ -369,9 +339,11 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical"
-                        android:padding="18dp">
+                        android:paddingHorizontal="18dp"
+                        android:paddingVertical="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -384,14 +356,10 @@
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1" />
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="Diziler"
                             android:textColor="@color/app_text_primary"
                             android:textSize="26sp"

@@ -9,6 +9,7 @@ import android.widget.Toast
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AlertDialog
 
@@ -37,8 +38,9 @@ class AccountsActivity : AppCompatActivity() {
         btnAdd.setOnClickListener { showAddDialog() }
         btnLogoutActive.setOnClickListener { logoutActive() }
 
-        recycler.layoutManager = LinearLayoutManager(this)
-        adapter = AccountAdapter(emptyList()) {
+        val spanCount = if (resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT) 3 else 5
+        recycler.layoutManager = GridLayoutManager(this, spanCount)
+        adapter = AccountAdapter(emptyList(), {
             val account = AccountsStore.getAll(this).firstOrNull { acc -> acc.id == it.id }
             if (account != null) {
                 AccountsStore.setActive(this, account)
@@ -46,7 +48,7 @@ class AccountsActivity : AppCompatActivity() {
                 loadActiveAccount()
                 loadStoredAccounts()
             }
-        }
+        }, { showAvatarPicker(it) })
         recycler.adapter = adapter
 
         loadActiveAccount()
@@ -84,11 +86,25 @@ class AccountsActivity : AppCompatActivity() {
                 name = acc.name,
                 server = acc.url,
                 type = acc.type,
-                isActive = acc.id == active?.id
+                isActive = acc.id == active?.id,
+                avatarIndex = Prefs.settings(this).getInt("AVATAR_${acc.id}", kotlin.math.abs(acc.id.hashCode()) % 6)
             )
         }
         adapter.update(list)
         tvEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+    }
+
+    private fun showAvatarPicker(item: AccountItem) {
+        val choices = arrayOf("Adaçayı", "Okyanus", "Mercan", "Lavanta", "Kum", "Gece Mavisi")
+        AlertDialog.Builder(this)
+            .setTitle("${item.name} için profil rengi")
+            .setSingleChoiceItems(choices, item.avatarIndex) { dialog, which ->
+                Prefs.settings(this).edit().putInt("AVATAR_${item.id}", which).apply()
+                dialog.dismiss()
+                loadStoredAccounts()
+            }
+            .setNegativeButton("Vazgeç", null)
+            .show()
     }
 
     private fun logoutActive() {

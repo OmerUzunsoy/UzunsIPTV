@@ -173,7 +173,8 @@ class LiveTvActivity : AppCompatActivity() {
                 focusFirstChannel(force = true)
             }
         )
-        rvCategories.layoutManager = LinearLayoutManager(this)
+        val categoryOrientation = if (!canHidePanel && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
+        rvCategories.layoutManager = LinearLayoutManager(this, categoryOrientation, false)
         rvCategories.adapter = categoryAdapter
 
         channelAdapter = ChannelAdapter(
@@ -245,15 +246,21 @@ class LiveTvActivity : AppCompatActivity() {
         val categoryPanel = findViewById<View>(R.id.panelCategories)
         val contentPanel = findViewById<View>(R.id.contentLivePanel)
         root.orientation = LinearLayout.VERTICAL
+        rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val horizontalMargin = (14 * resources.displayMetrics.density).toInt()
         (categoryPanel.layoutParams as LinearLayout.LayoutParams).apply {
             width = LinearLayout.LayoutParams.MATCH_PARENT
-            height = 0
-            weight = 0.36f
+            height = (136 * resources.displayMetrics.density).toInt()
+            weight = 0f
+            marginStart = horizontalMargin
+            marginEnd = horizontalMargin
         }.also { categoryPanel.layoutParams = it }
         (contentPanel.layoutParams as LinearLayout.LayoutParams).apply {
             width = LinearLayout.LayoutParams.MATCH_PARENT
             height = 0
-            weight = 0.64f
+            weight = 1f
+            marginStart = horizontalMargin
+            marginEnd = horizontalMargin
         }.also { contentPanel.layoutParams = it }
     }
 

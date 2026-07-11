@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app_surface"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingStart="18dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="18dp"
+    android:paddingBottom="28dp">
+
+    <LinearLayout
+        android:id="@+id/loginRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_panel_surface"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_universal_selector"
+            android:minWidth="0dp"
+            android:paddingHorizontal="14dp"
+            android:text="← Geri"
+            android:textAllCaps="false"
+            android:textColor="@color/app_text_primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_section_chip"
+            android:paddingHorizontal="11dp"
+            android:paddingVertical="6dp"
+            android:text="M3U PLAYLIST"
+            android:textColor="@color/app_accent_strong"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvM3uTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="serif"
+            android:text="Playlist Ekle"
+            android:textColor="@color/app_text_primary"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="24dp"
+            android:text="HTTP veya HTTPS bağlantını gir. İstersen giriş bilgilerini de ekleyebilirsin."
+            android:textColor="@color/app_text_secondary"
+            android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:hint="Playlist adı"
+            app:boxBackgroundColor="@color/app_panel_strong"
+            app:boxCornerRadiusBottomEnd="18dp"
+            app:boxCornerRadiusBottomStart="18dp"
+            app:boxCornerRadiusTopEnd="18dp"
+            app:boxCornerRadiusTopStart="18dp"
+            app:boxStrokeColor="@color/app_accent"
+            app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlaylistName"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="Örn: Benim Listem"
+                android:inputType="textCapWords"
+                android:textColor="@color/app_text_primary"
+                android:textColorHint="@color/app_text_muted"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:hint="Playlist URL"
+            app:boxBackgroundColor="@color/app_panel_strong"
+            app:boxCornerRadiusBottomEnd="18dp"
+            app:boxCornerRadiusBottomStart="18dp"
+            app:boxCornerRadiusTopEnd="18dp"
+            app:boxCornerRadiusTopStart="18dp"
+            app:boxStrokeColor="@color/app_accent"
+            app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlaylistUrl"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:inputType="textUri"
+                android:textColor="@color/app_text_primary"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:hint="Kullanıcı adı (isteğe bağlı)"
+            app:boxBackgroundColor="@color/app_panel_strong"
+            app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp"
+            app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp"
+            app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlaylistUser"
+                android:layout_width="match_parent" android:layout_height="56dp"
+                android:inputType="text" android:textColor="@color/app_text_primary" android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginBottom="22dp" android:hint="Şifre (isteğe bağlı)"
+            app:boxBackgroundColor="@color/app_panel_strong"
+            app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp"
+            app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp"
+            app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent"
+            app:passwordToggleEnabled="true" app:passwordToggleTint="@color/app_text_secondary">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPlaylistPass"
+                android:layout_width="match_parent" android:layout_height="56dp"
+                android:inputType="textPassword" android:textColor="@color/app_text_primary" android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnImportM3u"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="PLAYLISTİ KAYDET"
+            android:textColor="@color/login_button_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLastImport"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="14dp" android:gravity="center"
+            android:textColor="@color/app_text_muted" android:textSize="13sp" android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnPickM3u"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_universal_selector"
+            android:text="CİHAZDAN M3U DOSYASI SEÇ"
+            android:textColor="@color/app_text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

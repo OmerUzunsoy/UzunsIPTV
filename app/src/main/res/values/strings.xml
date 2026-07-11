@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">UzunsIPTV</string>
+    <string name="app_version_label">UzunsIPTV 2.0</string>
     <string name="developer_name">Ömer Uzunsoy</string>
     <string name="signature_format">Geliştirici: %1$s\nSürüm: %2$s</string>
     <string name="shortcuts_title">Kısayollar</string>

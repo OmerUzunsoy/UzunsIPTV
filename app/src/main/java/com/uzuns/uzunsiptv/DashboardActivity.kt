@@ -67,11 +67,6 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, AccountsActivity::class.java))
         }
 
-        // Ayarlar Butonu (Üst)
-        findViewById<LinearLayout>(R.id.btnSettings).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
-
         // Kısayollar
         findViewById<LinearLayout>(R.id.btnShortcuts).setOnClickListener {
             startActivity(Intent(this, ShortcutsActivity::class.java))
@@ -111,6 +106,8 @@ class DashboardActivity : AppCompatActivity() {
                 startActivity(Intent(this, SeriesActivity::class.java))
             }
         }
+
+        updateContentAvailability()
     }
 
     override fun onResume() {
@@ -119,6 +116,23 @@ class DashboardActivity : AppCompatActivity() {
         activeType = active?.type
         val name = active?.name ?: "Kullanıcı"
         findViewById<TextView>(R.id.tvUsername).text = "Hoşgeldin, $name"
+        updateContentAvailability()
+    }
+
+    private fun updateContentAvailability() {
+        val isM3u = activeType == TYPE_M3U
+        listOf(R.id.cardMovies, R.id.cardSeries).forEach { id ->
+            findViewById<CardView>(id).apply {
+                alpha = if (isM3u) 0.42f else 1f
+                isEnabled = !isM3u
+                isFocusable = !isM3u
+                contentDescription = if (isM3u) {
+                    "Bu bölüm M3U hesaplarında kullanılamaz"
+                } else {
+                    null
+                }
+            }
+        }
     }
 
     // --- AKILLI GÜNCELLEME SİMÜLASYONU ---

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardBackgroundColor="@color/app_card"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="18dp"
     app:cardElevation="0dp"
     android:clickable="true"
     android:focusable="true"

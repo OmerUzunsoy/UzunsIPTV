@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_app_surface"
+    android:clipToPadding="false"
+    android:fillViewport="true"
+    android:paddingStart="20dp"
+    android:paddingTop="24dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="28dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_panel_surface"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_section_chip"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:text="UZUNS IPTV"
+                    android:textColor="@color/app_accent_strong"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="serif"
+                    android:text="Yayın Kaynağını Seç"
+                    android:textColor="@color/app_text_primary"
+                    android:textSize="29sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imgSelectionLogo"
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:layout_marginStart="12dp"
+                android:contentDescription="Uygulama logosu"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_app_logo" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="3dp"
+            android:text="Hesabınla giriş yap veya M3U listeni ekleyerek hemen izlemeye başla."
+            android:textColor="@color/app_text_secondary"
+            android:textSize="14sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardXtream"
+            android:layout_width="match_parent"
+            android:layout_height="204dp"
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/bg_universal_selector"
+            app:cardBackgroundColor="@color/app_card_alt"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+
+            <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0.28" android:scaleType="centerCrop" android:src="@drawable/img_live_bg" />
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:padding="20dp">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp" android:contentDescription="" android:src="@android:drawable/ic_menu_manage" app:tint="@color/app_text_primary" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="18dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="HIZLI GİRİŞ" android:textColor="@color/app_accent_strong" android:textSize="11sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="serif" android:text="Xtream Codes" android:textColor="@color/app_text_primary" android:textSize="25sp" android:textStyle="bold" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Sunucu, kullanıcı adı ve şifre ile bağlan." android:textColor="@color/app_text_secondary" android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardM3u"
+            android:layout_width="match_parent"
+            android:layout_height="204dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/bg_universal_selector"
+            app:cardBackgroundColor="@color/app_panel_strong"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="0dp">
+            <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0.24" android:scaleType="centerCrop" android:src="@drawable/img_series_bg" />
+                <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:padding="20dp">
+                    <ImageView android:layout_width="48dp" android:layout_height="48dp" android:contentDescription="" android:src="@android:drawable/ic_menu_sort_by_size" app:tint="@color/app_text_primary" />
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="18dp" android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="ESNEK AKTARIM" android:textColor="@color/app_accent_strong" android:textSize="11sp" android:textStyle="bold" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:fontFamily="serif" android:text="M3U Playlist" android:textColor="@color/app_text_primary" android:textSize="25sp" android:textStyle="bold" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="Playlist bağlantını ekleyerek içe aktar." android:textColor="@color/app_text_secondary" android:textSize="13sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

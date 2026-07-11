@@ -1,14 +1,9 @@
 package com.uzuns.uzunsiptv
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 
 object ThemeHelper {
-    fun applyTheme(context: Context) {
-        val prefs = Prefs.settings(context)
-        val dark = prefs.getBoolean("DARK_THEME", true)
-        AppCompatDelegate.setDefaultNightMode(
-            if (dark) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-        )
+    fun applyTheme(@Suppress("UNUSED_PARAMETER") context: android.content.Context) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 }

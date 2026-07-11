@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="14dp"
+    android:layout_height="154dp"
+    android:layout_margin="6dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="@drawable/bg_universal_selector"
@@ -14,42 +14,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp">
 
         <ImageView
             android:id="@+id/imgAccountIcon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_toolbar_surface"
-            android:padding="10dp"
-            android:src="@drawable/ic_user_avatar"
-            android:tint="@color/app_accent"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/bg_placeholder"
+            android:padding="18dp"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:tint="@color/app_text_primary"
             android:scaleType="centerInside" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvAccountName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Hesap Adı"
                 android:textColor="@color/app_text_primary"
-                android:textSize="16sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvAccountDetail"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="sunucu"
                 android:textColor="@color/app_text_secondary"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:textSize="10sp" />
         </LinearLayout>
 
         <TextView
@@ -58,6 +61,8 @@
             android:layout_height="wrap_content"
             android:text="Aktif"
             android:textColor="@color/app_accent"
+            android:layout_marginTop="4dp"
+            android:textSize="10sp"
             android:textStyle="bold" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

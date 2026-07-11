@@ -6,12 +6,25 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 
 class M3uActivity : AppCompatActivity() {
+
+    private val pickPlaylist = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        uri ?: return@registerForActivityResult
+        runCatching {
+            contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        etUrl.setText(uri.toString())
+        if (etName.text.isNullOrBlank()) {
+            etName.setText(uri.lastPathSegment?.substringAfterLast('/')?.substringBeforeLast('.') ?: "M3U Playlist")
+        }
+        etUrl.error = null
+    }
 
     private lateinit var tvLastImport: TextView
     private lateinit var etName: TextInputEditText
@@ -32,14 +45,14 @@ class M3uActivity : AppCompatActivity() {
         tvLastImport = findViewById(R.id.tvLastImport)
         btnImport = findViewById<Button>(R.id.btnImportM3u)
         val btnBack = findViewById<Button>(R.id.btnBack)
+        val btnPickFile = findViewById<Button>(R.id.btnPickM3u)
 
-        etName.hint = "Playlist Adı (Örn: Benim Listem)"
         etUrl.setText("https://")
-        etUrl.hint = "M3U URL veya dosya yolu"
-        etUser.hint = "Kullanıcı Adı (İsteğe bağlı)"
-        etPass.hint = "Şifre (İsteğe bağlı)"
         btnImport.text = "PLAYLİSTİ KAYDET"
         btnBack.setOnClickListener { finish() }
+        btnPickFile.setOnClickListener {
+            pickPlaylist.launch(arrayOf("audio/x-mpegurl", "application/vnd.apple.mpegurl", "text/plain", "*/*"))
+        }
 
 
         val info = Prefs.m3u(this).getString("LAST_IMPORT", "")
@@ -53,8 +66,11 @@ class M3uActivity : AppCompatActivity() {
     private fun importPlaylist() {
         val name = etName.text?.toString()?.trim().orEmpty()
         val rawUrl = etUrl.text?.toString()?.trim().orEmpty()
-        if (name.isEmpty() || rawUrl.isEmpty()) {
+        etName.error = if (name.isEmpty()) "Playlist adı gerekli" else null
+        etUrl.error = if (rawUrl.isEmpty() || rawUrl == "https://") "Playlist URL gerekli" else null
+        if (name.isEmpty() || rawUrl.isEmpty() || rawUrl == "https://") {
             Toast.makeText(this, "Playlist adı ve URL zorunludur.", Toast.LENGTH_SHORT).show()
+            if (name.isEmpty()) etName.requestFocus() else etUrl.requestFocus()
             return
         }
         val url = if (

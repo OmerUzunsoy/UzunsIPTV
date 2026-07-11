@@ -3,26 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F0F0F">
+    android:background="@drawable/bg_app_surface">
 
     <LinearLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#1A1A1A"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_toolbar_surface"
         android:gravity="center_vertical"
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_universal_selector"
             android:padding="8dp"
             android:scaleType="centerInside"
             android:src="@android:drawable/ic_media_previous"
-            app:tint="#FFFFFF" />
+            app:tint="@color/app_text_primary" />
 
         <TextView
             android:layout_width="0dp"
@@ -30,7 +31,7 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:text="@string/shortcuts_title"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_universal_selector"
+        android:background="@drawable/bg_panel_surface"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -53,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shortcuts_player"
-                android:textColor="#03DAC5"
+                android:textColor="@color/app_accent_strong"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -118,13 +119,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginVertical="12dp"
-                android:background="#222222" />
+                android:background="@color/app_stroke" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shortcuts_navigation"
-                android:textColor="#03DAC5"
+                android:textColor="@color/app_accent_strong"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -133,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/shortcut_menu_overlay"
-                android:textColor="#CCCCCC"
+                android:textColor="@color/app_text_secondary"
                 android:textSize="13sp"
                 android:layout_marginBottom="8dp" />
 
@@ -141,7 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/shortcut_numbers"
-                android:textColor="#CCCCCC"
+                android:textColor="@color/app_text_secondary"
                 android:textSize="13sp" />
         </LinearLayout>
     </ScrollView>

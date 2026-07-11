@@ -6,7 +6,7 @@
                 android:angle="315"
                 android:startColor="@color/app_bg_secondary"
                 android:centerColor="@color/app_bg"
-                android:endColor="#090705" />
+                android:endColor="#070B10" />
         </shape>
     </item>
     <item android:top="-140dp" android:left="-100dp" android:right="120dp">
@@ -14,8 +14,8 @@
             <gradient
                 android:type="radial"
                 android:gradientRadius="260dp"
-                android:centerColor="#55B66A2C"
-                android:endColor="#00120E0A" />
+                android:centerColor="#263F5B72"
+                android:endColor="#000B1017" />
         </shape>
     </item>
     <item android:bottom="-180dp" android:right="-120dp" android:left="140dp">
@@ -23,8 +23,8 @@
             <gradient
                 android:type="radial"
                 android:gradientRadius="300dp"
-                android:centerColor="#33E7B267"
-                android:endColor="#00120E0A" />
+                android:centerColor="#247FA9A3"
+                android:endColor="#000B1017" />
         </shape>
     </item>
 </layer-list>

@@ -50,8 +50,16 @@ class LoginActivity : AppCompatActivity() {
             val username = etUsername.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
+            etServerUrl.error = if (inputUrl.isEmpty()) "Sunucu adresi gerekli" else null
+            etUsername.error = if (username.isEmpty()) "Kullanıcı adı gerekli" else null
+            etPassword.error = if (password.isEmpty()) "Şifre gerekli" else null
             if (inputUrl.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Lütfen zorunlu alanları doldurun!", Toast.LENGTH_SHORT).show()
+                when {
+                    inputUrl.isEmpty() -> etServerUrl.requestFocus()
+                    username.isEmpty() -> etUsername.requestFocus()
+                    else -> etPassword.requestFocus()
+                }
                 return@setOnClickListener
             }
 
@@ -63,6 +71,8 @@ class LoginActivity : AppCompatActivity() {
             val normalizedUrl = try {
                 ApiClient.sanitizeBaseUrl(inputUrl)
             } catch (e: IllegalArgumentException) {
+                etServerUrl.error = e.message ?: "Geçerli bir sunucu adresi girin"
+                etServerUrl.requestFocus()
                 Toast.makeText(this, e.message ?: "Sunucu adresi hatalı", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

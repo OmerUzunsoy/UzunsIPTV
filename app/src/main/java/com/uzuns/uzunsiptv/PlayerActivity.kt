@@ -176,7 +176,7 @@ class PlayerActivity : AppCompatActivity() {
 
         tvChannelName?.text = currentStreamName
         val settings = Prefs.settings(this)
-        autoPlayNext = settings.getBoolean("AUTO_PLAY", true)
+        autoPlayNext = true
 
         configureUiForType(streamType)
         setupButtons()

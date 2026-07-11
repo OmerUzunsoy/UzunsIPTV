@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.28"
                 android:orientation="vertical"
-                android:background="#1A1A1A"
+                android:background="@color/app_panel_strong"
                 android:padding="10dp">
 
                 <TextView
@@ -57,7 +57,7 @@
                 android:layout_weight="0.72"
                 android:orientation="vertical"
                 android:padding="12dp"
-                android:background="#111111">
+                android:background="@color/app_panel">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@android:drawable/ic_menu_search"
-                        app:tint="#AAAAAA"/>
+                        app:tint="@color/app_text_muted"/>
 
                     <EditText
                         android:id="@+id/etOverlaySearch"
@@ -97,7 +97,7 @@
                         android:background="@null"
                         android:hint="Kanal ara..."
                         android:textColor="#FFFFFF"
-                        android:textColorHint="#666666"
+                        android:textColorHint="@color/app_text_muted"
                         android:textSize="14sp"
                         android:paddingStart="8dp"
                         android:singleLine="true"

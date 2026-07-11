@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#101010"
+    android:background="@drawable/bg_app_surface"
     tools:context=".LiveChannelActivity">
 
     <LinearLayout
@@ -14,15 +14,16 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:background="#1A1A1A"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_toolbar_surface"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@android:drawable/ic_menu_revert"
-            app:tint="#FFFFFF"
+            app:tint="@color/app_text_primary"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"/>
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="KANALLAR"
-            android:textColor="#03DAC5"
+            android:textColor="@color/app_accent_strong"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginStart="16dp"/>
@@ -42,7 +43,7 @@
         android:id="@+id/pbLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="#03DAC5"
+        android:indeterminateTint="@color/app_accent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

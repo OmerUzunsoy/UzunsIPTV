@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -70,8 +70,8 @@
 
         <ImageView
             android:id="@+id/imgSelectionLogo"
-            android:layout_width="124dp"
-            android:layout_height="124dp"
+            android:layout_width="92dp"
+            android:layout_height="92dp"
             android:contentDescription="Uygulama Logosu"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_app_logo" />
@@ -81,7 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -92,7 +92,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardXtream"
             android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_height="190dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:clickable="true"
@@ -166,7 +166,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardM3u"
             android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_height="190dp"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:clickable="true"

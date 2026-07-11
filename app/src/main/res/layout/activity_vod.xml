@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingBottom="18dp">
+            android:paddingBottom="8dp">
 
             <ImageView
                 android:id="@+id/btnBack"
@@ -116,7 +116,7 @@
                 android:background="@drawable/bg_universal_selector"
                 android:drawableStart="@drawable/ic_shuffle"
                 android:drawablePadding="8dp"
-                android:text="Bugün ne izlesek?"
+                android:text="Şansını Dene"
                 android:textAllCaps="false"
                 android:textColor="@color/app_accent"
                 android:textStyle="bold"
@@ -209,7 +209,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Tekrar"
+                        android:text="Başka Seç"
                         android:textStyle="bold"
                         android:background="@drawable/bg_universal_selector"
                         android:textColor="@color/app_text_primary"

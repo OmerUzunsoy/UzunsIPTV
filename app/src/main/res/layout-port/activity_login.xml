@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/bg_app_surface" android:clipToPadding="false"
+    android:fillViewport="true" android:paddingStart="18dp" android:paddingTop="20dp"
+    android:paddingEnd="18dp" android:paddingBottom="28dp">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="@drawable/bg_panel_surface" android:orientation="vertical" android:padding="20dp">
+        <Button android:id="@+id/btnBack" android:layout_width="wrap_content" android:layout_height="48dp"
+            android:background="@drawable/bg_universal_selector" android:minWidth="0dp" android:paddingHorizontal="14dp"
+            android:text="← Geri" android:textAllCaps="false" android:textColor="@color/app_text_primary" android:textStyle="bold" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp" android:gravity="center_vertical" android:orientation="horizontal">
+            <ImageView android:layout_width="70dp" android:layout_height="70dp" android:contentDescription="Uygulama logosu" android:scaleType="fitCenter" android:src="@drawable/ic_app_logo" />
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="14dp" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="XTREAM CODES" android:textColor="@color/app_accent_strong" android:textSize="11sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:fontFamily="serif" android:text="Hesabına Giriş Yap" android:textColor="@color/app_text_primary" android:textSize="27sp" android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="24dp" android:text="Sağlayıcından aldığın sunucu ve hesap bilgilerini gir." android:textColor="@color/app_text_secondary" android:textSize="14sp" />
+
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:hint="Profil adı" app:boxBackgroundColor="@color/app_panel_strong" app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp" app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp" app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etProfileName" android:layout_width="match_parent" android:layout_height="64dp" android:inputType="textCapWords" android:textColor="@color/app_text_primary" android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:hint="Sunucu adresi" app:boxBackgroundColor="@color/app_panel_strong" app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp" app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp" app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etServerUrl" android:layout_width="match_parent" android:layout_height="64dp" android:inputType="textUri" android:text="http://" android:textColor="@color/app_text_primary" android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="14dp" android:hint="Kullanıcı adı" app:boxBackgroundColor="@color/app_panel_strong" app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp" app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp" app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etUsername" android:layout_width="match_parent" android:layout_height="64dp" android:inputType="text" android:textColor="@color/app_text_primary" android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="22dp" android:hint="Şifre" app:boxBackgroundColor="@color/app_panel_strong" app:boxCornerRadiusBottomEnd="18dp" app:boxCornerRadiusBottomStart="18dp" app:boxCornerRadiusTopEnd="18dp" app:boxCornerRadiusTopStart="18dp" app:boxStrokeColor="@color/app_accent" app:hintTextColor="@color/app_accent" app:passwordToggleEnabled="true" app:passwordToggleTint="@color/app_text_secondary">
+            <com.google.android.material.textfield.TextInputEditText android:id="@+id/etPassword" android:layout_width="match_parent" android:layout_height="64dp" android:inputType="textPassword" android:textColor="@color/app_text_primary" android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button android:id="@+id/btnLogin" android:layout_width="match_parent" android:layout_height="64dp" android:background="@drawable/bg_primary_button" android:text="GİRİŞ YAP" android:textColor="@color/login_button_text" android:textSize="16sp" android:textStyle="bold" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

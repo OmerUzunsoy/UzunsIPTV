@@ -53,9 +53,6 @@
             android:name=".AccountsActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
             android:name=".M3uActivity"
             android:exported="false" />
         <activity

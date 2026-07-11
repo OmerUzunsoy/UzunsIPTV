@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:background="@drawable/bg_universal_selector"
             android:padding="8dp"
             android:clickable="true"

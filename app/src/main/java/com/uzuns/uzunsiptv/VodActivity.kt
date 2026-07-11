@@ -243,7 +243,8 @@ class VodActivity : AppCompatActivity() {
                 focusFirstMovie(force = true)
             }
         )
-        rvCategories.layoutManager = LinearLayoutManager(this)
+        val categoryOrientation = if (!canHidePanel && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
+        rvCategories.layoutManager = LinearLayoutManager(this, categoryOrientation, false)
         rvCategories.adapter = categoryAdapter
 
         vodAdapter = VodAdapter(
@@ -321,15 +322,21 @@ class VodActivity : AppCompatActivity() {
         val categoryPanel = findViewById<View>(R.id.panelCategories)
         val contentPanel = findViewById<View>(R.id.contentVodPanel)
         root.orientation = LinearLayout.VERTICAL
+        rvCategories.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val horizontalMargin = (14 * resources.displayMetrics.density).toInt()
         (categoryPanel.layoutParams as LinearLayout.LayoutParams).apply {
             width = LinearLayout.LayoutParams.MATCH_PARENT
-            height = 0
-            weight = 0.34f
+            height = (136 * resources.displayMetrics.density).toInt()
+            weight = 0f
+            marginStart = horizontalMargin
+            marginEnd = horizontalMargin
         }.also { categoryPanel.layoutParams = it }
         (contentPanel.layoutParams as LinearLayout.LayoutParams).apply {
             width = LinearLayout.LayoutParams.MATCH_PARENT
             height = 0
-            weight = 0.66f
+            weight = 1f
+            marginStart = horizontalMargin
+            marginEnd = horizontalMargin
         }.also { contentPanel.layoutParams = it }
     }
 
@@ -504,8 +511,13 @@ class VodActivity : AppCompatActivity() {
             toast("Bu listede film yok.")
             return
         }
-        remainingRerolls = 2
         randomOverlay.visibility = View.VISIBLE
+        randomOverlay.translationY = 0f
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            randomCard.translationY = -(120 * resources.displayMetrics.density)
+        } else {
+            randomCard.translationY = 0f
+        }
         startPreviewShuffle()
         randomCard.alpha = 0f
         randomCard.scaleX = 0.9f
@@ -533,8 +545,7 @@ class VodActivity : AppCompatActivity() {
     }
 
     private fun rerollRandom() {
-        if (remainingRerolls <= 0 || currentDisplayedMovies.isEmpty()) return
-        remainingRerolls--
+        if (currentDisplayedMovies.isEmpty()) return
         startPreviewShuffle()
     }
 
@@ -563,11 +574,10 @@ class VodActivity : AppCompatActivity() {
 
     private fun finishShuffleWith(pick: VodStream) {
         showRandomCard(pick, dimOnly = false)
-        randomAgain.isEnabled = remainingRerolls > 0
+        randomAgain.isEnabled = true
         randomGo.isEnabled = true
         if (randomAgain is android.widget.Button) {
-            (randomAgain as android.widget.Button).text =
-                if (remainingRerolls > 0) "Tekrar (${remainingRerolls})" else "Limit"
+            (randomAgain as android.widget.Button).text = "Başka Seç"
         }
         randomCard.animate().scaleX(1.05f).scaleY(1.05f).setDuration(120)
             .setInterpolator(AccelerateDecelerateInterpolator())
