@@ -1,172 +1,200 @@
-# 📺 UzunsIPTV
+# UzunsIPTV 2.0
 
-Modern ve kullanıcı dostu bir **Android IPTV Player** uygulaması. Xtream Codes API ve M3U playlist desteği ile canlı TV, film (VOD) ve dizi içeriklerini izlemenizi sağlar.
+<p align="center">
+  <img src="app/src/main/res/drawable/ic_app_logo.png" alt="UzunsIPTV logosu" width="180" />
+</p>
 
-[![Download APK](https://img.shields.io/badge/📥_APK_İNDİR-v1.0.0-brightgreen?style=for-the-badge)](https://github.com/OmerUzunsoy/UzunsIPTV/releases/download/v1.0.0/UzunsIPTV-v1.0.0.apk)
-[![GitHub Release](https://img.shields.io/github/v/release/OmerUzunsoy/UzunsIPTV?style=for-the-badge&logo=github)](https://github.com/OmerUzunsoy/UzunsIPTV/releases)
+<p align="center">
+  Telefon, tablet ve Android TV için geliştirilmiş modern bir IPTV oynatıcısı.
+</p>
 
-![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
-![ExoPlayer](https://img.shields.io/badge/ExoPlayer-4285F4?style=for-the-badge&logo=google&logoColor=white)
-![Android TV](https://img.shields.io/badge/Android%20TV-41BDF5?style=for-the-badge&logo=android&logoColor=white)
+<p align="center">
+  <img alt="Android" src="https://img.shields.io/badge/Android-7.0%2B-3A6F68?style=flat-square&logo=android&logoColor=white" />
+  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.0-596A8A?style=flat-square&logo=kotlin&logoColor=white" />
+  <img alt="Sürüm" src="https://img.shields.io/badge/sürüm-2.0-C9A979?style=flat-square" />
+  <img alt="Lisans" src="https://img.shields.io/badge/lisans-kişisel_kullanım-7FA9A3?style=flat-square" />
+</p>
 
-## ✨ Özellikler
+UzunsIPTV; Xtream Codes hesaplarını ve M3U oynatma listelerini tek bir arayüzde buluşturur. Canlı yayınları, filmleri ve dizileri telefon veya televizyon üzerinden rahatça keşfetmek ve izlemek için tasarlanmıştır.
 
-### 📡 Canlı TV (Live TV)
-- Xtream Codes API desteği
-- M3U playlist desteği
-- Kategori bazlı kanal listesi
-- Kanal favorilere ekleme
-- Hızlı kanal geçişi (Hotkey desteği)
+> UzunsIPTV herhangi bir kanal, yayın veya oynatma listesi sağlamaz. Uygulamayı kullanmak için size ait yasal bir Xtream Codes hesabı ya da M3U kaynağı gerekir.
 
-### 🎬 Filmler (VOD)
-- Film kategorileri
-- Film detay sayfası
-- Fragman izleme (YouTube entegrasyonu)
-- İzleme geçmişi takibi
+## Öne çıkan özellikler
 
-### 📺 Diziler (Series)
-- Dizi kategorileri
-- Sezon ve bölüm listesi
-- Bölüm bazlı izleme takibi
+### Canlı TV
 
-### 🎮 Video Oynatıcı
-- **ExoPlayer** tabanlı güçlü oynatıcı
-- Çoklu ses/altyazı desteği
-- Aspect ratio (en-boy oranı) değiştirme
+- Xtream Codes API ve M3U desteği
+- Kategori bazlı kanal gezintisi
+- Favoriler ve son izlenenler
+- Telefon için yatay kaydırılabilir kategori şeritleri
+- TV kumandası ve kanal numarası kısayolları
+- Kanal logosu ve yayın bilgisi gösterimi
+
+### Film ve dizi
+
+- Kategori ve arama desteği
+- Film ve dizi detay sayfaları
+- Sezon ve bölüm seçimi
+- İzleme ilerlemesini cihazda saklama
+- Kaldığın yerden devam etme
+- Sınırsız **Şansını Dene** önerileri
+- YouTube fragman desteği
+
+### Oynatıcı
+
+- ExoPlayer tabanlı video oynatma
+- Çoklu ses ve altyazı seçimi
 - Oynatma hızı kontrolü
-- Kaldığı yerden devam etme
-- Tam ekran deneyimi
+- Görüntü oranı seçenekleri
+- Otomatik sonraki bölüm
+- Canlı TV kanal paneli
+- Kumanda renk tuşları ve sayı kısayolları
 
-### 📱 Uygulama Özellikleri
-- 🌙 Karanlık/Aydınlık tema desteği
-- 📺 Android TV uyumluluğu
-- 👤 Çoklu hesap yönetimi
-- 💾 Room Database ile yerel veri saklama
-- 🔄 Otomatik giriş
+### Hesaplar ve profiller
 
-## 🛠️ Teknolojiler
+- Birden fazla Xtream veya M3U hesabı saklama
+- Netflix tarzı profil seçme ekranı
+- Hazır profil renkleri
+- Tek dokunuşla aktif profil değiştirme
+- Hesap bilgilerinin cihazda güvenli biçimde saklanması
 
-| Teknoloji | Kullanım Alanı |
-|-----------|----------------|
-| **Kotlin** | Ana programlama dili |
-| **ExoPlayer** | Video oynatma |
-| **Retrofit** | HTTP istekleri |
-| **Gson** | JSON parse |
-| **Glide** | Görsel yükleme |
-| **Room Database** | Yerel veritabanı |
-| **ViewModel & LiveData** | MVVM mimarisi |
-| **YouTube Player** | Fragman oynatma |
-| **Coroutines** | Asenkron işlemler |
+## 2.0 ile neler değişti?
 
-## 📁 Proje Yapısı
+UzunsIPTV 2.0 yalnızca bir renk güncellemesi değildir. Telefon ve TV deneyimi yeniden ele alınmıştır.
 
-```
-app/src/main/java/com/uzuns/uzunsiptv/
-├── 📱 Activities
-│   ├── SelectionActivity.kt      # Ana seçim ekranı
-│   ├── LoginActivity.kt          # Giriş ekranı
-│   ├── DashboardActivity.kt      # Ana menü
-│   ├── LiveTvActivity.kt         # Canlı TV listesi
-│   ├── VodActivity.kt            # Film listesi
-│   ├── VodDetailsActivity.kt     # Film detayları
-│   ├── SeriesActivity.kt         # Dizi listesi
-│   ├── SeriesDetailsActivity.kt  # Dizi detayları
-│   ├── PlayerActivity.kt         # Video oynatıcı
-│   ├── TrailerActivity.kt        # Fragman oynatıcı
-│   ├── AccountsActivity.kt       # Hesap yönetimi
-│   ├── SettingsActivity.kt       # Ayarlar
-│   └── M3uActivity.kt            # M3U import
-│
-├── 🔌 Network
-│   ├── XtreamApi.kt              # Xtream API interface
-│   ├── ApiClient.kt              # Retrofit client
-│   └── LoginResponse.kt          # API response modelleri
-│
-├── 📦 Models
-│   ├── LiveModels.kt             # Canlı TV modelleri
-│   ├── VodModels.kt              # Film modelleri
-│   └── SeriesModels.kt           # Dizi modelleri
-│
-├── 🎨 Adapters
-│   ├── ChannelAdapter.kt         # Kanal listesi
-│   ├── CategoryAdapter.kt        # Kategori listesi
-│   ├── VodAdapter.kt             # Film listesi
-│   ├── SeriesAdapter.kt          # Dizi listesi
-│   ├── SeasonAdapter.kt          # Sezon listesi
-│   ├── EpisodeAdapter.kt         # Bölüm listesi
-│   └── AccountAdapter.kt         # Hesap listesi
-│
-├── 🗄️ Database (data/db/)
-│   ├── AppDatabase.kt            # Room database
-│   ├── FavoriteChannel.kt        # Favori entity
-│   ├── FavoriteDao.kt            # Favori DAO
-│   ├── WatchProgress.kt          # İzleme ilerlemesi entity
-│   └── WatchDao.kt               # İzleme DAO
-│
-└── 🛠️ Utils
-    ├── ThemeHelper.kt            # Tema yönetimi
-    ├── ChannelManager.kt         # Kanal yönetimi
-    ├── ChannelHotkeyManager.kt   # Kanal kısayolları
-    └── EpisodeManager.kt         # Bölüm yönetimi
-```
+- Dikey telefonlar için özel kaynak seçimi, giriş ve ana ekran düzenleri
+- Yatay telefonlarda daha ferah kartlar ve kompakt navigasyon
+- Yenilenen koyu grafit tasarım sistemi
+- Daha büyük dokunma alanları ve okunabilir metinler
+- Telefon için yeniden tasarlanan film ve dizi detayları
+- Kompakt, yatay kategori seçimi
+- Yenilenen hesap ve profil yönetimi
+- Cihazdan doğrudan M3U dosyası seçme
+- Form doğrulama ve açıklayıcı hata mesajları
+- Yeni uygulama ve launcher logosu
+- Tek, tutarlı tema
 
-## 📋 Gereksinimler
+## Desteklenen cihazlar
 
-- **Min SDK:** 24 (Android 7.0 Nougat)
-- **Target SDK:** 34 (Android 14)
-- **Compile SDK:** 36
-- **Kotlin:** 2.0+
+| Özellik | Değer |
+|---|---|
+| Minimum Android | Android 7.0 / API 24 |
+| Hedef Android | Android 14 / API 34 |
+| Compile SDK | API 36 |
+| Telefon | Dikey ve yatay |
+| Tablet | Desteklenir |
+| Android TV | Leanback launcher ve kumanda desteği |
 
-## 🚀 Kurulum
+## Kullanım
 
-1. Projeyi klonlayın:
+### Xtream Codes hesabı ekleme
+
+1. Uygulamayı açın.
+2. **Xtream Codes** kartını seçin.
+3. Sunucu adresini, kullanıcı adını ve şifreyi girin.
+4. İsterseniz hesabınıza hatırlanabilir bir profil adı verin.
+5. **Giriş Yap** düğmesine dokunun.
+
+### M3U listesi ekleme
+
+1. Ana ekrandan **M3U Playlist** seçeneğini açın.
+2. Oynatma listesi adını ve URL adresini girin.
+3. Alternatif olarak **Cihazdan M3U Dosyası Seç** düğmesini kullanın.
+4. Playlist kaydedildiğinde Canlı TV ekranından kanallara erişebilirsiniz.
+
+## Projeyi çalıştırma
+
+### Gereksinimler
+
+- Android Studio
+- JDK 17 veya üzeri
+- Android SDK 36
+
+### Kurulum
+
 ```bash
 git clone https://github.com/OmerUzunsoy/UzunsIPTV.git
+cd UzunsIPTV
 ```
 
-2. Android Studio'da açın
+Projeyi Android Studio ile açın, Gradle eşitlemesinin tamamlanmasını bekleyin ve bir Android cihaz ya da emülatör seçerek çalıştırın.
 
-3. Gradle sync yapın
+Komut satırından debug APK oluşturmak için:
 
-4. Uygulamayı çalıştırın
+```bash
+./gradlew assembleDebug
+```
 
-## 📱 Ekran Görüntüleri
+Windows üzerinde:
 
-*Yakında eklenecek...*
+```powershell
+.\gradlew.bat assembleDebug
+```
 
-## 🔐 Kullanım
+Oluşturulan APK:
 
-### Xtream Codes ile Giriş
-1. Uygulamayı açın
-2. "Xtream Codes" seçeneğini tıklayın
-3. Server URL, kullanıcı adı ve şifrenizi girin
-4. Giriş yapın ve içeriklerin keyfini çıkarın!
+```text
+app/build/outputs/apk/debug/app-debug.apk
+```
 
-### M3U Playlist ile Giriş
-1. Uygulamayı açın
-2. "M3U Playlist" seçeneğini tıklayın
-3. M3U URL'nizi girin
-4. Kanallarınız yüklenecektir
+## Test ve kalite kontrolü
 
-## 🤝 Katkıda Bulunma
+```bash
+./gradlew testDebugUnitTest lintDebug
+```
 
-1. Bu projeyi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/AmazingFeature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some AmazingFeature'`)
-4. Branch'i push edin (`git push origin feature/AmazingFeature`)
-5. Pull Request açın
+Projede API istemcisi, kanal kısayolları ve temel uygulama davranışları için birim testleri bulunmaktadır.
 
-## 📄 Lisans
+## Kullanılan teknolojiler
 
-Bu proje kişisel kullanım amaçlıdır.
+| Teknoloji | Kullanım alanı |
+|---|---|
+| Kotlin | Uygulama geliştirme |
+| Android Views | Responsive arayüzler |
+| ExoPlayer | Video oynatma |
+| Retrofit ve Gson | Xtream API iletişimi |
+| Room | Favoriler ve izleme ilerlemesi |
+| Glide | Poster ve kanal görselleri |
+| Coroutines | Asenkron işlemler |
+| Security Crypto | Yerel hesap verileri |
 
-## 👤 Geliştirici
+## Proje yapısı
 
-**Ömer Uzunsoy**
+```text
+app/src/main/
+├── java/com/uzuns/uzunsiptv/
+│   ├── *Activity.kt          Ekranlar ve oynatıcı
+│   ├── *Adapter.kt           Liste ve profil bileşenleri
+│   ├── ApiClient.kt          Ağ istemcisi
+│   ├── AccountsStore.kt      Hesap yönetimi
+│   ├── M3uRepository.kt      M3U okuma ve önbellekleme
+│   └── data/db/              Room veritabanı
+└── res/
+    ├── layout/               TV ve geniş ekran düzenleri
+    ├── layout-port/          Dikey telefon düzenleri
+    ├── drawable/             Arayüz ve marka kaynakları
+    └── values/               Renkler, temalar ve metinler
+```
 
-- GitHub: [@OmerUzunsoy](https://github.com/OmerUzunsoy)
+## Katkıda bulunma
+
+1. Depoyu fork edin.
+2. Değişikliğiniz için yeni bir branch oluşturun.
+3. Kodunuzu ekleyin ve testleri çalıştırın.
+4. Açıklayıcı bir commit oluşturun.
+5. Pull request açın.
+
+Hata bildirirken cihaz modelini, Android sürümünü, ekran yönünü ve mümkünse ekran görüntüsünü eklemeniz sorunun daha hızlı çözülmesine yardımcı olur.
+
+## Yasal bilgilendirme
+
+Bu proje yalnızca medya oynatıcı işlevi sunar. Herhangi bir IPTV hizmeti, kanal paketi veya telifli içerik dağıtmaz. Kullanıcılar ekledikleri kaynakların kullanım ve yayın haklarından kendileri sorumludur.
+
+## Geliştirici
+
+**Ömer Uzunsoy**<br>
+GitHub: [@OmerUzunsoy](https://github.com/OmerUzunsoy)
 
 ---
 
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
+Projeyi faydalı bulduysanız GitHub üzerinden yıldız vererek destek olabilirsiniz.
