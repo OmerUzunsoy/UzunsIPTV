@@ -10,7 +10,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.uzuns.uzunsiptv"
+        applicationId = "com.omeruzunsoy.uzunsiptv"
         minSdk = 24
         targetSdk = 34
         versionCode = 17
