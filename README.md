@@ -17,6 +17,10 @@
 
 UzunsIPTV; Xtream Codes hesaplarını ve M3U oynatma listelerini tek bir arayüzde buluşturur. Canlı yayınları, filmleri ve dizileri telefon veya televizyon üzerinden rahatça keşfetmek ve izlemek için tasarlanmıştır.
 
+<p align="center">
+  <a href="https://github.com/OmerUzunsoy/UzunsIPTV/releases">Sürümleri ve APK dosyalarını görüntüle</a>
+</p>
+
 > UzunsIPTV herhangi bir kanal, yayın veya oynatma listesi sağlamaz. Uygulamayı kullanmak için size ait yasal bir Xtream Codes hesabı ya da M3U kaynağı gerekir.
 
 ## Öne çıkan özellikler
