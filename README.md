@@ -83,7 +83,7 @@ UzunsIPTV 2.0 yalnızca bir renk güncellemesi değildir. Telefon ve TV deneyimi
 | Özellik | Değer |
 |---|---|
 | Minimum Android | Android 7.0 / API 24 |
-| Hedef Android | Android 14 / API 34 |
+| Hedef Android | Android 15 / API 35 |
 | Compile SDK | API 36 |
 | Telefon | Dikey ve yatay |
 | Tablet | Desteklenir |
