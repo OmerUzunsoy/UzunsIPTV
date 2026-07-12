@@ -52,8 +52,11 @@ class DashboardActivity : AppCompatActivity() {
         val savedDate = Prefs.app(this).getString("LAST_UPDATE", "Veri yok")
         tvLastUpdate.text = "Son Güncelleme: $savedDate"
 
-        // Uygulama açılınca otomatik güncelleme simülasyonu yap
-        updatePlaylistData()
+        // Only refresh on the first creation. Rotation recreates the Activity and
+        // must not start another request or show another success message.
+        if (savedInstanceState == null) {
+            updatePlaylistData()
+        }
 
         // --- 4. BUTON TIKLAMA OLAYLARI ---
 
@@ -194,6 +197,9 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun restoreRefreshState(message: String) {
+        // A Retrofit callback can arrive after an orientation change. Do not let
+        // the destroyed Activity update views or display a stale Toast.
+        if (isFinishing || isDestroyed) return
         pbLoading.visibility = View.GONE
         ivRefreshIcon.visibility = View.VISIBLE
         btnRefresh.isEnabled = true

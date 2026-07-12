@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -31,7 +30,8 @@ class SeriesDetailsActivity : AppCompatActivity() {
     private lateinit var rvSeasons: RecyclerView
     private lateinit var rvEpisodes: RecyclerView
     private lateinit var pbEpisodes: ProgressBar
-    private lateinit var btnBack: LinearLayout
+    // The back control is a Button in portrait and a layout container in landscape.
+    private lateinit var btnBack: View
     private lateinit var btnFavorite: Button
 
     private lateinit var seasonAdapter: SeasonAdapter

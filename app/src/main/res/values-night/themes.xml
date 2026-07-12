@@ -8,6 +8,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/app_bg</item>
         <item name="android:windowLightStatusBar">false</item>
+        <!-- Keep portrait headers below the status bar on Android 15. -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
         <item name="android:textColorPrimary">@color/app_text_primary</item>
         <item name="android:textColorSecondary">@color/app_text_secondary</item>
     </style>

@@ -78,6 +78,13 @@ class SeriesActivity : AppCompatActivity() {
     private val shuffleDelays = listOf(80L, 140L, 220L, 320L, 450L, 600L)
     private var searchJob: Job? = null
     private var gridSpanCount = 5
+    private var apiDataLoaded = false
+
+    private data class RetainedSeriesState(
+        val series: List<SeriesStream>,
+        val categories: List<LiveCategory>,
+        val activeCategoryId: String
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -115,8 +122,33 @@ class SeriesActivity : AppCompatActivity() {
             return
         }
         loadLocalData()
-        loadData()
+        val retainedState = lastCustomNonConfigurationInstance as? RetainedSeriesState
+        if (retainedState != null) {
+            restoreApiState(retainedState)
+        } else {
+            loadData()
+        }
         rvCategories.requestFocus()
+    }
+
+    private fun restoreApiState(state: RetainedSeriesState) {
+        allSeriesList = state.series
+        apiCategories = state.categories
+        activeCategoryId = state.activeCategoryId
+        seriesByCategory = allSeriesList.groupBy { it.categoryId }
+        apiDataLoaded = true
+        pbLoading.visibility = View.GONE
+        updateCategoryMenu()
+        rebuildContinueList()
+        favoritesList = favoritesList.mapNotNull { favorite ->
+            allSeriesList.firstOrNull { it.seriesId == favorite.seriesId } ?: favorite
+        }
+        updateDisplayedList(getListByCategory(activeCategoryId))
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        if (!apiDataLoaded) return null
+        return RetainedSeriesState(allSeriesList, apiCategories, activeCategoryId)
     }
 
     private fun loadLocalData() {
@@ -305,6 +337,7 @@ class SeriesActivity : AppCompatActivity() {
                 pbLoading.visibility = View.GONE
                 if (response.isSuccessful && response.body() != null) {
                     allSeriesList = response.body()!!
+                    apiDataLoaded = true
                     seriesByCategory = allSeriesList.groupBy { it.categoryId }
                     rebuildContinueList()
                     favoritesList = favoritesList.mapNotNull { favorite ->

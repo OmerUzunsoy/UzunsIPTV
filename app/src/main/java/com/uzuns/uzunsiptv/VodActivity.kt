@@ -81,6 +81,13 @@ class VodActivity : AppCompatActivity() {
     private val shuffleDelays = listOf(80L, 140L, 220L, 320L, 450L, 600L)
     private var searchJob: Job? = null
     private var gridSpanCount = 5
+    private var apiDataLoaded = false
+
+    private data class RetainedVodState(
+        val movies: List<VodStream>,
+        val categories: List<LiveCategory>,
+        val activeCategoryId: String
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         ThemeHelper.applyTheme(this)
@@ -119,8 +126,32 @@ class VodActivity : AppCompatActivity() {
         }
 
         loadLocalData() // Veritabanını dinle
-        loadApiData()   // İnternetten çek
+        val retainedState = lastCustomNonConfigurationInstance as? RetainedVodState
+        if (retainedState != null) {
+            restoreApiState(retainedState)
+        } else {
+            loadApiData() // İnternetten yalnızca ilk açılışta çek
+        }
         rvCategories.requestFocus()
+    }
+
+    private fun restoreApiState(state: RetainedVodState) {
+        allMoviesList = state.movies
+        apiCategories = state.categories
+        activeCategoryId = state.activeCategoryId
+        movieMetaMap = allMoviesList.associateBy { it.streamId }
+        moviesByCategory = allMoviesList.groupBy { it.categoryId }
+        apiDataLoaded = true
+        pbLoading.visibility = View.GONE
+        updateCategoryMenu()
+        rebuildContinueList()
+        rebuildFavoriteList()
+        updateDisplayedList(getListByCategory(activeCategoryId))
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        if (!apiDataLoaded) return null
+        return RetainedVodState(allMoviesList, apiCategories, activeCategoryId)
     }
 
     private fun loadLocalData() {
@@ -199,6 +230,7 @@ class VodActivity : AppCompatActivity() {
                 pbLoading.visibility = View.GONE
                 if (response.isSuccessful && response.body() != null) {
                     allMoviesList = response.body()!!
+                    apiDataLoaded = true
                     movieMetaMap = allMoviesList.associateBy { it.streamId }
                     moviesByCategory = allMoviesList.groupBy { it.categoryId }
                     rebuildContinueList()

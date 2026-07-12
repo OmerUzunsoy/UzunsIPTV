@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_app_surface"
-    android:padding="32dp">
+    android:paddingStart="40dp"
+    android:paddingTop="32dp"
+    android:paddingEnd="40dp"
+    android:paddingBottom="36dp">
 
     <View
         android:id="@+id/tvSelectionPanel"
@@ -52,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:fontFamily="sans-serif-medium"
+                android:maxLines="2"
                 android:text="Yayın Kaynağını Seç"
                 android:textColor="@color/app_text_primary"
                 android:textSize="32sp"
@@ -110,10 +114,10 @@
                 <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
                 <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:padding="26dp">
                     <ImageView android:layout_width="64dp" android:layout_height="64dp" android:contentDescription="" android:src="@android:drawable/ic_menu_manage" app:tint="@color/app_text_primary" />
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp" android:layout_weight="1" android:orientation="vertical">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp" android:layout_weight="1" android:orientation="vertical" android:paddingVertical="2dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_section_chip" android:paddingHorizontal="12dp" android:paddingVertical="6dp" android:text="HIZLI GİRİŞ" android:textColor="@color/app_accent_strong" android:textSize="11sp" android:textStyle="bold" />
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:fontFamily="sans-serif-medium" android:text="Xtream Codes" android:textColor="@color/app_text_primary" android:textSize="27sp" android:textStyle="bold" />
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:lineSpacingExtra="2dp" android:text="Sunucu, kullanıcı adı ve şifre ile hesabına güvenle bağlan." android:textColor="@color/app_text_secondary" android:textSize="14sp" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:fontFamily="sans-serif-medium" android:maxLines="2" android:text="Xtream Codes" android:textColor="@color/app_text_primary" android:textSize="27sp" android:textStyle="bold" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:lineSpacingExtra="2dp" android:maxLines="3" android:text="Sunucu, kullanıcı adı ve şifre ile hesabına güvenle bağlan." android:textColor="@color/app_text_secondary" android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
@@ -138,10 +142,10 @@
                 <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/gradient_card_overlay" />
                 <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center_vertical" android:orientation="horizontal" android:padding="26dp">
                     <ImageView android:layout_width="64dp" android:layout_height="64dp" android:contentDescription="" android:src="@android:drawable/ic_menu_sort_by_size" app:tint="@color/app_text_primary" />
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp" android:layout_weight="1" android:orientation="vertical">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="24dp" android:layout_weight="1" android:orientation="vertical" android:paddingVertical="2dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_section_chip" android:paddingHorizontal="12dp" android:paddingVertical="6dp" android:text="ESNEK AKTARIM" android:textColor="@color/app_accent_strong" android:textSize="11sp" android:textStyle="bold" />
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:fontFamily="sans-serif-medium" android:text="M3U Playlist" android:textColor="@color/app_text_primary" android:textSize="27sp" android:textStyle="bold" />
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:lineSpacingExtra="2dp" android:text="Bağlantı veya dosya kullanarak oynatma listeni içe aktar." android:textColor="@color/app_text_secondary" android:textSize="14sp" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:fontFamily="sans-serif-medium" android:maxLines="2" android:text="M3U Playlist" android:textColor="@color/app_text_primary" android:textSize="27sp" android:textStyle="bold" />
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="7dp" android:lineSpacingExtra="2dp" android:maxLines="3" android:text="Bağlantı veya dosya kullanarak oynatma listeni içe aktar." android:textColor="@color/app_text_secondary" android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
