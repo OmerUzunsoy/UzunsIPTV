@@ -37,7 +37,7 @@
                     android:background="@drawable/bg_section_chip"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="5dp"
-                    android:text="UZUNS IPTV 2.0"
+                    android:text="@string/app_version_label"
                     android:textColor="@color/app_accent_strong"
                     android:textSize="11sp"
                     android:textStyle="bold" />
