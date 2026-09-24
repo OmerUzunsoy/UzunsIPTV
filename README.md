@@ -1,24 +1,38 @@
 # UzunsIPTV 2.0
 
 <p align="center">
-  <img src="app/src/main/res/drawable/ic_app_logo.png" alt="UzunsIPTV logosu" width="180" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=240&color=0:111827,50:1f3b4d,100:0f766e&text=UzunsIPTV%202.0&fontColor=ffffff&fontSize=52&animation=fadeIn&desc=Modern%20IPTV%20Deneyimi%20%E2%80%A2%20Android%20Phone%20%E2%80%A2%20Tablet%20%E2%80%A2%20TV&descAlignY=64" alt="UzunsIPTV başlık" />
 </p>
 
 <p align="center">
-  Telefon, tablet ve Android TV için geliştirilmiş modern bir IPTV oynatıcısı.
+  <img src="app/src/main/res/drawable/ic_app_logo.png" alt="UzunsIPTV logosu" width="132" />
 </p>
 
 <p align="center">
-  <img alt="Android" src="https://img.shields.io/badge/Android-7.0%2B-3A6F68?style=flat-square&logo=android&logoColor=white" />
-  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.0-596A8A?style=flat-square&logo=kotlin&logoColor=white" />
-  <img alt="Sürüm" src="https://img.shields.io/badge/sürüm-2.0-C9A979?style=flat-square" />
-  <img alt="Lisans" src="https://img.shields.io/badge/lisans-kişisel_kullanım-7FA9A3?style=flat-square" />
+  Xtream Codes + M3U desteğini tek yerde buluşturan, telefon, tablet ve Android TV için tasarlanmış modern IPTV oynatıcısı.
 </p>
 
-UzunsIPTV; Xtream Codes hesaplarını ve M3U oynatma listelerini tek bir arayüzde buluşturur. Canlı yayınları, filmleri ve dizileri telefon veya televizyon üzerinden rahatça keşfetmek ve izlemek için tasarlanmıştır.
+<p align="center">
+  <img alt="Android" src="https://img.shields.io/badge/Android-7.0%2B-2f855a?style=for-the-badge&logo=android&logoColor=white" />
+  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-2.0-6b46c1?style=for-the-badge&logo=kotlin&logoColor=white" />
+  <img alt="ExoPlayer" src="https://img.shields.io/badge/ExoPlayer-Enabled-2563eb?style=for-the-badge" />
+  <img alt="Sürüm" src="https://img.shields.io/badge/Version-2.0-f59e0b?style=for-the-badge" />
+</p>
 
 <p align="center">
-  <a href="https://github.com/OmerUzunsoy/UzunsIPTV/releases">Sürümleri ve APK dosyalarını görüntüle</a>
+  <a href="https://github.com/OmerUzunsoy/UzunsIPTV/releases">
+    <img alt="Releases" src="https://img.shields.io/badge/Download-APK-111827?style=for-the-badge&logo=github&logoColor=white" />
+  </a>
+  <a href="#öne-çıkan-özellikler">
+    <img alt="Özellikler" src="https://img.shields.io/badge/Explore-Features-0f766e?style=for-the-badge" />
+  </a>
+  <a href="#projeyi-çalıştırma">
+    <img alt="Kurulum" src="https://img.shields.io/badge/Get-Started-1d4ed8?style=for-the-badge" />
+  </a>
+</p>
+
+<p align="center">
+  <sub>Daha hızlı keşif, daha temiz arayüz, daha akıcı TV ve mobil deneyimi.</sub>
 </p>
 
 > UzunsIPTV herhangi bir kanal, yayın veya oynatma listesi sağlamaz. Uygulamayı kullanmak için size ait yasal bir Xtream Codes hesabı ya da M3U kaynağı gerekir.
